@@ -37,17 +37,17 @@ class RoutesInit extends StatelessWidget {
             ),
           ),
           //text
-          fontFamily: 'Georgia',
+          fontFamily: 'roboto',
           textTheme: TextTheme(
             headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
             headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-            bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Georgia'),
+            bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'roboto'),
           ),
         ),
         //banner
         debugShowCheckedModeBanner: false,
         //routes
-        initialRoute: LoginActivity.id,
+        initialRoute: HomeActivity.id,
         routes: {
           HomeActivity.id: (context) => HomeActivity(),
           LoginActivity.id: (context) => LoginActivity(),
