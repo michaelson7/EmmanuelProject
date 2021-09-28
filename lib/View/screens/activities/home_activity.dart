@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/screens/fragments/NewsFragment.dart';
 import 'package:flutter_project/View/screens/fragments/home_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/map_fragment.dart';
 
@@ -16,8 +17,7 @@ class _HomeActivityState extends State<HomeActivity> {
   List<Widget> fragments = [
     HomeFragment(),
     MapFragment(),
-    HomeFragment(),
-    HomeFragment(),
+    NewsFragment(),
     HomeFragment(),
   ];
   int _selectedIndex = 0;
@@ -65,10 +65,6 @@ class _HomeActivityState extends State<HomeActivity> {
             BottomNavigationBarItem(
               icon: Icon(FontAwesome.map, size: 24),
               label: 'Map ',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(FontAwesome.upload, size: 24),
-              label: 'Uploads',
             ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesome.newspaper_o, size: 24),

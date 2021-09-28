@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/View/constants/constants.dart';
-
+import 'package:flutter_project/View/screens/activities/stationRecords.dart';
+import 'package:get/get.dart';
 import 'ImageCardBackground.dart';
 import 'horizontalWidgetBuilder.dart';
 
-horizontalCardBuilder() {
+horizontalCardBuilder({required BuildContext context}) {
   List<Widget> widgetList = [];
   for (var i = 0; i < 10; i++) {
     var interface = stationCardDesign(
+      context: context,
       title: 'Station Name $i',
     );
     widgetList.add(interface);
@@ -34,6 +36,7 @@ gridCardBuilder({required BuildContext context}) {
     padding: const EdgeInsets.all(4.0),
     itemBuilder: (BuildContext context, int index) {
       return stationCardDesign(
+        context: context,
         title: 'Station Name $index',
       );
     },
@@ -41,6 +44,7 @@ gridCardBuilder({required BuildContext context}) {
 }
 
 Card stationCardDesign({
+  required BuildContext context,
   required String title,
   String imagePath =
       "https://images.unsplash.com/photo-1593642634524-b40b5baae6bb?ixid=MnwxMjA3f"
@@ -51,7 +55,17 @@ Card stationCardDesign({
     color: kCardBackground,
     elevation: 5,
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => StationGaugeRecords(
+              imgPath: imagePath,
+              stationName: title,
+            ),
+          ),
+        );
+      },
       child: Container(
         width: 180,
         child: Column(

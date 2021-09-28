@@ -1,3 +1,4 @@
+import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/response_model.dart';
 import 'package:flutter_project/Model/core/user_data_model.dart';
 import 'package:flutter_project/Model/service/api.dart';
@@ -6,20 +7,77 @@ import 'package:flutter_project/View/widgets/logger_widget.dart';
 class ApiHelper {
   Api api = new Api();
 
-  Future<dynamic> globalGetRequest({
-    required String src,
-    required int Id,
-  }) async {
+  //ROLES
+  Future<RolesModel> rolesGet({required int id}) async {
     try {
-      var response = await api.globalGetRequest(src: src, Id: Id);
-      UserDataModel model = UserDataModel.fromJson(response);
+      RolesModel model;
+      var jsonResponse = await api.globalGetRequest(src: 'Roles', Id: id);
+      if (!jsonResponse["error"]) {
+        model = RolesModel.fromJson(jsonResponse["results"]);
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toJson().toString(),
+        );
+        return model;
+      } else {
+        throw Exception(getError('empty', 'rolesGet'));
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'rolesGet'));
+    }
+  }
+
+  Future<List<RolesModel>> rolesGetAll() async {
+    try {
+      List<RolesModel> model = [];
+      var jsonResponse = await api.globalGetAllRequest(src: 'Roles');
+      if (!jsonResponse["error"]) {
+        List<dynamic> results = jsonResponse["results"];
+        for (int i = 0; i < results.length; i++) {
+          var modelData = RolesModel.fromJson(jsonResponse["results"][i]);
+          model.add(modelData);
+        }
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toString(),
+        );
+        return model;
+      }
+      throw Exception(getError('empty', 'rolesGetAll'));
+    } catch (e) {
+      throw Exception(getError(e, 'rolesGet'));
+    }
+  }
+
+  Future<ResponseModel> rolesDelete(int id) async {
+    try {
+      var response = await api.globalDeleteRequest(src: 'Roles', Id: id);
+      ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
         jsonFile: model.toJson().toString(),
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'sampleGet'));
+      throw Exception(getError(e, 'rolesDelete'));
+    }
+  }
+
+  Future<ResponseModel> rolesHandler(
+      {required RolesModel modelData, bool shouldUpdate = false}) async {
+    try {
+      var response = await api.rolesHandler(
+        model: modelData,
+        shouldUpdate: shouldUpdate,
+      );
+      ResponseModel model = ResponseModel.fromJson(response);
+      displayJsonInLogger(
+        shouldDisplayInLogger: false,
+        jsonFile: model.toJson().toString(),
+      );
+      return model;
+    } catch (e) {
+      throw Exception(getError(e, 'rolesHandler'));
     }
   }
 
@@ -65,7 +123,7 @@ class ApiHelper {
     bool shouldDisplayInLogger = false,
     dynamic jsonFile,
   }) {
-    if (shouldDisplayInLogger) {
+    if (!shouldDisplayInLogger) {
       loggerInfo(message: "JSON RESPONSE: $jsonFile");
     }
   }

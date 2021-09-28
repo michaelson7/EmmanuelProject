@@ -3,6 +3,7 @@ import 'package:flutter_project/Provider/account_provider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/home_activity.dart';
 import 'package:flutter_project/View/screens/activities/login_activity.dart';
+import 'package:flutter_project/View/screens/activities/stationRecords.dart';
 import 'package:provider/provider.dart';
 
 class RoutesInit extends StatelessWidget {
@@ -21,6 +22,7 @@ class RoutesInit extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: kAccent,
           accentColor: kAccent,
+          scaffoldBackgroundColor: Colors.black,
           //buttons
           buttonTheme: ButtonThemeData(
             buttonColor: kAccent,

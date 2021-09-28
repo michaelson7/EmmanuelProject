@@ -35,7 +35,7 @@ class _HomeFragmentState extends State<HomeFragment> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 20),
-        Text('Hello User', style: kTextStyleHeader1),
+        Text('Hello Peter', style: kTextStyleHeader1),
         Text('Lets get started', style: kTextStyleHint),
         SizedBox(height: 8),
         Material(
@@ -45,15 +45,12 @@ class _HomeFragmentState extends State<HomeFragment> {
             onTap: () {},
             child: Container(
               width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ListTile(
-                  leading: Icon(
-                    FontAwesome.search,
-                    color: Colors.grey,
-                  ),
-                  title: Text('Search for station', style: kTextStyleHint),
+              child: ListTile(
+                leading: Icon(
+                  FontAwesome.search,
+                  color: Colors.grey,
                 ),
+                title: Text('Search for station', style: kTextStyleHint),
               ),
             ),
           ),
@@ -70,7 +67,7 @@ class _HomeFragmentState extends State<HomeFragment> {
         children: [
           Text('Recent Updates', style: kTextStyleHeader2),
           SizedBox(height: 5),
-          horizontalCardBuilder()
+          horizontalCardBuilder(context: context)
         ],
       ),
     );

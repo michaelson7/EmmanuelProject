@@ -1,52 +1,30 @@
+import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/user_data_model.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 
 import 'data_access.dart';
 
 class Api {
-  String baseUrl = "10.0.2.2:54150";
+  String baseUrl = "127.0.0.1:8090";
   String urlPath = "";
 
-  //------------------------------------------------------------------------------global requests
-  Future<dynamic> globalGetRequest({
-    required String src,
-    required int Id,
-  }) async {
-    urlPath = '/${src}Get';
-    final requestParameters = {"Id": Id.toString()};
-    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
-    displayUriInLogger(
-      shouldDisplayInLogger: false,
-      Uri: uri.toString(),
-    );
-    return await getResponse(uri);
-  }
-
-  Future<dynamic> globalGetAllRequest({required String src}) async {
-    urlPath = '/${src}GetAll';
+  //ROLES
+  Future<dynamic> rolesHandler(
+      {required RolesModel model, bool shouldUpdate = false}) async {
+    urlPath = shouldUpdate ? '/updateRoles' : '/createRoles';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
+      "title": modelData.title,
+    };
     Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
       shouldDisplayInLogger: false,
       Uri: uri.toString(),
     );
-    return await getResponse(uri);
+    return await postResponse(uri, body);
   }
 
-  Future<dynamic> globalDeleteRequest({
-    required String src,
-    required int Id,
-  }) async {
-    urlPath = '/${src}Delete';
-    final requestParameters = {"Id": Id.toString()};
-    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
-    displayUriInLogger(
-      shouldDisplayInLogger: false,
-      Uri: uri.toString(),
-    );
-    return await getResponse(uri);
-  }
-
-  //----------------------------------------------------------------------------------------------custom requests
   //sample got request
   Future<dynamic> sampleGet({required email, required password}) async {
     urlPath = '/login';
@@ -77,7 +55,7 @@ class Api {
         "coordinates": modelData.lastName
       }
     };
-    Uri uri = Uri.https(baseUrl, urlPath);
+    Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
       shouldDisplayInLogger: false,
       Uri: uri.toString(),
@@ -85,8 +63,47 @@ class Api {
     return await postResponse(uri, body);
   }
 
+  //------------------------------------------------------------------------------global requests
+  Future<dynamic> globalGetRequest({
+    required String src,
+    required int Id,
+  }) async {
+    urlPath = '/Get$src';
+    final requestParameters = {"Id": Id.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
+  }
+
+  Future<dynamic> globalGetAllRequest({required String src}) async {
+    urlPath = '/GetAll$src';
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
+  }
+
+  Future<dynamic> globalDeleteRequest({
+    required String src,
+    required int Id,
+  }) async {
+    urlPath = '/Delete$src';
+    final requestParameters = {"Id": Id.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
+  }
+
   void displayUriInLogger({bool shouldDisplayInLogger = false, dynamic Uri}) {
-    if (shouldDisplayInLogger) {
+    if (!shouldDisplayInLogger) {
       loggerInfo(message: "URI: $Uri");
     }
   }
