@@ -13,7 +13,7 @@ class StationsModel {
   dynamic title;
   dynamic imagePath;
   dynamic imageFile;
-  StationStatisticsModel stationStatisticsModel;
+  StationStatisticsModel? stationStatisticsModel;
 
   factory StationsModel.fromJson(Map<String, dynamic> json) => StationsModel(
         id: json["id"],
@@ -29,6 +29,6 @@ class StationsModel {
         "title": title,
         "imagePath": imagePath,
         "imageFile": imageFile,
-        "stationStatisticsModel": stationStatisticsModel.toJson(),
+        "stationStatisticsModel": stationStatisticsModel!.toJson(),
       };
 }

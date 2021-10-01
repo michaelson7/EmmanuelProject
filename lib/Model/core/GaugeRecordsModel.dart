@@ -30,10 +30,10 @@ class GaugeRecordsModel {
   int gaugeId;
   bool approval;
   int approverId;
-  DateTime timestamp;
-  UsersModel uploaderModel;
-  UsersModel approverModel;
-  GaugeStationModel gaugeStationModel;
+  DateTime? timestamp;
+  UsersModel? uploaderModel;
+  UsersModel? approverModel;
+  GaugeStationModel? gaugeStationModel;
   dynamic imageFile;
 
   factory GaugeRecordsModel.fromJson(Map<String, dynamic> json) =>
@@ -67,10 +67,10 @@ class GaugeRecordsModel {
         "gaugeId": gaugeId,
         "approval": approval,
         "approverId": approverId,
-        "timestamp": timestamp.toIso8601String(),
-        "uploaderModel": uploaderModel.toJson(),
-        "approverModel": approverModel.toJson(),
-        "gaugeStationModel": gaugeStationModel.toJson(),
+        "timestamp": timestamp!.toIso8601String(),
+        "uploaderModel": uploaderModel!.toJson(),
+        "approverModel": approverModel!.toJson(),
+        "gaugeStationModel": gaugeStationModel!.toJson(),
         "imageFile": imageFile,
       };
 }

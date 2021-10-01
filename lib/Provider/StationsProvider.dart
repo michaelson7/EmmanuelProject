@@ -14,7 +14,7 @@ class StationsProvider extends ChangeNotifier {
   }
 
   Future<StationsModel?> getStations(int id) async {
-    var result = await _apiHelper.StationsGet(id: id);
+    var result = await _apiHelper.stationsGet(id: id);
     if (result != null) {
       _StationsController.add(result);
       return result;
@@ -22,7 +22,7 @@ class StationsProvider extends ChangeNotifier {
   }
 
   Future<List<StationsModel>?> getAllStations() async {
-    var result = await _apiHelper.StationsGetAll();
+    var result = await _apiHelper.stationsGetAll();
     if (result != null) {
       for (var data in result) {
         _StationsController.add(data);
@@ -35,7 +35,7 @@ class StationsProvider extends ChangeNotifier {
     required StationsModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.StationsHandler(
+    var result = await _apiHelper.stationsHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

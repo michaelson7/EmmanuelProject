@@ -14,7 +14,7 @@ class StaffProvider extends ChangeNotifier {
   }
 
   Future<StaffModel?> getStaff(int id) async {
-    var result = await _apiHelper.StaffGet(id: id);
+    var result = await _apiHelper.staffGet(id: id);
     if (result != null) {
       _StaffController.add(result);
       return result;
@@ -22,7 +22,7 @@ class StaffProvider extends ChangeNotifier {
   }
 
   Future<List<StaffModel>?> getAllStaff() async {
-    var result = await _apiHelper.StaffGetAll();
+    var result = await _apiHelper.staffGetAll();
     if (result != null) {
       for (var data in result) {
         _StaffController.add(data);
@@ -35,7 +35,7 @@ class StaffProvider extends ChangeNotifier {
     required StaffModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.StaffHandler(
+    var result = await _apiHelper.staffHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

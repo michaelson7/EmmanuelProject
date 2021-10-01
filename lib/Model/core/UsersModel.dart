@@ -18,8 +18,8 @@ class UsersModel {
   dynamic email;
   dynamic password;
   int roleId;
-  DateTime timestamp;
-  RolesModel rolesModel;
+  DateTime? timestamp;
+  RolesModel? rolesModel;
 
   factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
         id: json["id"],
@@ -39,7 +39,7 @@ class UsersModel {
         "email": email,
         "password": password,
         "roleId": roleId,
-        "timestamp": timestamp.toIso8601String(),
-        "rolesModel": rolesModel.toJson(),
+        "timestamp": timestamp!.toIso8601String(),
+        "rolesModel": rolesModel!.toJson(),
       };
 }

@@ -21,10 +21,10 @@ class Api {
       {required RolesModel model, bool shouldUpdate = false}) async {
     urlPath = shouldUpdate ? '/updateRoles' : '/createRoles';
     var modelData = model;
-    final body = jsonEncode({
+    final body = {
       "id": modelData.id.toString(),
       "title": modelData.title,
-    });
+    };
     Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
       shouldDisplayInLogger: true,

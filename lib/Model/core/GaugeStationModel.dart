@@ -11,7 +11,7 @@ class GaugeStationModel {
   int id;
   dynamic title;
   int stationId;
-  StationsModel stationsModel;
+  StationsModel? stationsModel;
 
   factory GaugeStationModel.fromJson(Map<String, dynamic> json) =>
       GaugeStationModel(
@@ -25,6 +25,6 @@ class GaugeStationModel {
         "id": id,
         "title": title,
         "stationId": stationId,
-        "stationsModel": stationsModel.toJson(),
+        "stationsModel": stationsModel!.toJson(),
       };
 }

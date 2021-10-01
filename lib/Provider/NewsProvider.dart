@@ -14,7 +14,7 @@ class NewsProvider extends ChangeNotifier {
   }
 
   Future<NewsModel?> getNews(int id) async {
-    var result = await _apiHelper.NewsGet(id: id);
+    var result = await _apiHelper.newsGet(id: id);
     if (result != null) {
       _NewsController.add(result);
       return result;
@@ -22,7 +22,7 @@ class NewsProvider extends ChangeNotifier {
   }
 
   Future<List<NewsModel>?> getAllNews() async {
-    var result = await _apiHelper.NewsGetAll();
+    var result = await _apiHelper.newsGetAll();
     if (result != null) {
       for (var data in result) {
         _NewsController.add(data);
@@ -35,7 +35,7 @@ class NewsProvider extends ChangeNotifier {
     required NewsModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.NewsHandler(
+    var result = await _apiHelper.newsHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

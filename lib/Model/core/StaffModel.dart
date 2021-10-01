@@ -15,8 +15,8 @@ class StaffModel {
   dynamic salary;
   int userId;
   int stationId;
-  UsersModel usersModel;
-  StationsModel stationsModel;
+  UsersModel? usersModel;
+  StationsModel? stationsModel;
 
   factory StaffModel.fromJson(Map<String, dynamic> json) => StaffModel(
         id: json["id"],
@@ -32,7 +32,7 @@ class StaffModel {
         "salary": salary,
         "userId": userId,
         "stationId": stationId,
-        "usersModel": usersModel.toJson(),
-        "stationsModel": stationsModel.toJson(),
+        "usersModel": usersModel!.toJson(),
+        "stationsModel": stationsModel!.toJson(),
       };
 }

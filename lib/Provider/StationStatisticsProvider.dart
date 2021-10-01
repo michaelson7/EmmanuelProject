@@ -15,7 +15,7 @@ class StationStatisticsProvider extends ChangeNotifier {
   }
 
   Future<StationStatisticsModel?> getStationStatistics(int id) async {
-    StationStatisticsModel? result = await _apiHelper.StationStatisticsGet(
+    StationStatisticsModel? result = await _apiHelper.stationstatisticsGet(
       id: id,
     );
     if (result != null) {
@@ -24,7 +24,7 @@ class StationStatisticsProvider extends ChangeNotifier {
   }
 
   Future<List<StationStatisticsModel>?> getAllStationStatistics() async {
-    var result = await _apiHelper.StationStatisticsGetAll();
+    var result = await _apiHelper.stationstatisticsGetAll();
     if (result != null) {
       for (var data in result) {
         _StationStatisticsController.add(data);
@@ -37,7 +37,7 @@ class StationStatisticsProvider extends ChangeNotifier {
     required StationStatisticsModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.StationStatisticsHandler(
+    var result = await _apiHelper.stationStatisticsHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

@@ -84,12 +84,12 @@ class ApiHelper {
     }
   }
 
-  //GaugeRecords
-  Future<List<GaugeRecordsModel>?> GaugeRecordsGet({required int id}) async {
+  //gaugeRecords
+  Future<List<GaugeRecordsModel>?> gaugeRecordsGet({required int id}) async {
     try {
       List<GaugeRecordsModel> model = [];
       var jsonResponse =
-          await api.globalGetRequest(src: 'GaugeRecords', Id: id);
+          await api.globalGetRequest(src: 'gaugeRecords', Id: id);
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -104,14 +104,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'GaugeRecordsGet'));
+      throw Exception(getError(e, 'gaugeRecordsGet'));
     }
   }
 
-  Future<List<GaugeRecordsModel>?> GaugeRecordsGetAll() async {
+  Future<List<GaugeRecordsModel>?> gaugeRecordsGetAll() async {
     try {
       List<GaugeRecordsModel> model = [];
-      var jsonResponse = await api.globalGetAllRequest(src: 'GaugeRecords');
+      var jsonResponse = await api.globalGetAllRequest(src: 'gaugeRecords');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -126,13 +126,13 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'GaugeRecordsGet'));
+      throw Exception(getError(e, 'gaugeRecordsGet'));
     }
   }
 
-  Future<ResponseModel> GaugeRecordsDelete(int id) async {
+  Future<ResponseModel> gaugeRecordsDelete(int id) async {
     try {
-      var response = await api.globalDeleteRequest(src: 'GaugeRecords', Id: id);
+      var response = await api.globalDeleteRequest(src: 'gaugeRecords', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -140,11 +140,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'GaugeRecordsDelete'));
+      throw Exception(getError(e, 'gaugeRecordsDelete'));
     }
   }
 
-  Future<ResponseModel> GaugeRecordsHandler(
+  Future<ResponseModel> gaugeRecordsHandler(
       {required GaugeRecordsModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.gaugeRecordsHandler(
@@ -158,16 +158,16 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'GaugeRecordsHandler'));
+      throw Exception(getError(e, 'gaugeRecordsHandler'));
     }
   }
 
-  //GaugeStation
-  Future<GaugeStationModel?> GaugeStationGet({required int id}) async {
+  //gaugeStation
+  Future<GaugeStationModel?> gaugeStationGet({required int id}) async {
     try {
       GaugeStationModel model;
       var jsonResponse =
-          await api.globalGetRequest(src: 'GaugeStation', Id: id);
+          await api.globalGetRequest(src: 'gaugeStation', Id: id);
       if (!jsonResponse["error"]) {
         model = GaugeStationModel.fromJson(jsonResponse["results"]);
         displayJsonInLogger(
@@ -177,14 +177,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'GaugeStationGet'));
+      throw Exception(getError(e, 'gaugeStationGet'));
     }
   }
 
-  Future<List<GaugeStationModel>?> GaugeStationGetAll() async {
+  Future<List<GaugeStationModel>?> gaugeStationGetAll() async {
     try {
       List<GaugeStationModel> model = [];
-      var jsonResponse = await api.globalGetAllRequest(src: 'GaugeStation');
+      var jsonResponse = await api.globalGetAllRequest(src: 'gaugeStation');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -199,13 +199,13 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'GaugeStationGet'));
+      throw Exception(getError(e, 'gaugeStationGet'));
     }
   }
 
-  Future<ResponseModel> GaugeStationDelete(int id) async {
+  Future<ResponseModel> gaugeStationDelete(int id) async {
     try {
-      var response = await api.globalDeleteRequest(src: 'GaugeStation', Id: id);
+      var response = await api.globalDeleteRequest(src: 'gaugeStation', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -213,11 +213,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'GaugeStationDelete'));
+      throw Exception(getError(e, 'gaugeStationDelete'));
     }
   }
 
-  Future<ResponseModel> GaugeStationHandler(
+  Future<ResponseModel> gaugeStationHandler(
       {required GaugeStationModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.gaugeStationHandler(
@@ -231,15 +231,15 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'GaugeStationHandler'));
+      throw Exception(getError(e, 'gaugeStationHandler'));
     }
   }
 
-  //News
-  Future<NewsModel?> NewsGet({required int id}) async {
+  //news
+  Future<NewsModel?> newsGet({required int id}) async {
     try {
       NewsModel model;
-      var jsonResponse = await api.globalGetRequest(src: 'News', Id: id);
+      var jsonResponse = await api.globalGetRequest(src: 'news', Id: id);
       if (!jsonResponse["error"]) {
         model = NewsModel.fromJson(jsonResponse["results"]);
         displayJsonInLogger(
@@ -249,14 +249,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'NewsGet'));
+      throw Exception(getError(e, 'newsGet'));
     }
   }
 
-  Future<List<NewsModel>?> NewsGetAll() async {
+  Future<List<NewsModel>?> newsGetAll() async {
     try {
       List<NewsModel> model = [];
-      var jsonResponse = await api.globalGetAllRequest(src: 'News');
+      var jsonResponse = await api.globalGetAllRequest(src: 'news');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -270,13 +270,13 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'NewsGet'));
+      throw Exception(getError(e, 'newsGet'));
     }
   }
 
-  Future<ResponseModel> NewsDelete(int id) async {
+  Future<ResponseModel> newsDelete(int id) async {
     try {
-      var response = await api.globalDeleteRequest(src: 'News', Id: id);
+      var response = await api.globalDeleteRequest(src: 'news', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -284,11 +284,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'NewsDelete'));
+      throw Exception(getError(e, 'newsDelete'));
     }
   }
 
-  Future<ResponseModel> NewsHandler(
+  Future<ResponseModel> newsHandler(
       {required NewsModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.newsHandler(
@@ -302,15 +302,15 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'NewsHandler'));
+      throw Exception(getError(e, 'newsHandler'));
     }
   }
 
-  //Staff
-  Future<StaffModel?> StaffGet({required int id}) async {
+  //staff
+  Future<StaffModel?> staffGet({required int id}) async {
     try {
       StaffModel model;
-      var jsonResponse = await api.globalGetRequest(src: 'Staff', Id: id);
+      var jsonResponse = await api.globalGetRequest(src: 'staff', Id: id);
       if (!jsonResponse["error"]) {
         model = StaffModel.fromJson(jsonResponse["results"]);
         displayJsonInLogger(
@@ -320,14 +320,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StaffGet'));
+      throw Exception(getError(e, 'staffGet'));
     }
   }
 
-  Future<List<StaffModel>?> StaffGetAll() async {
+  Future<List<StaffModel>?> staffGetAll() async {
     try {
       List<StaffModel> model = [];
-      var jsonResponse = await api.globalGetAllRequest(src: 'Staff');
+      var jsonResponse = await api.globalGetAllRequest(src: 'staff');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -341,13 +341,13 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StaffGet'));
+      throw Exception(getError(e, 'staffGet'));
     }
   }
 
-  Future<ResponseModel> StaffDelete(int id) async {
+  Future<ResponseModel> staffDelete(int id) async {
     try {
-      var response = await api.globalDeleteRequest(src: 'Staff', Id: id);
+      var response = await api.globalDeleteRequest(src: 'staff', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -355,11 +355,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StaffDelete'));
+      throw Exception(getError(e, 'staffDelete'));
     }
   }
 
-  Future<ResponseModel> StaffHandler(
+  Future<ResponseModel> staffHandler(
       {required StaffModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.staffHandler(
@@ -373,15 +373,15 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StaffHandler'));
+      throw Exception(getError(e, 'staffHandler'));
     }
   }
 
-  //Stations
-  Future<StationsModel?> StationsGet({required int id}) async {
+  //stations
+  Future<StationsModel?> stationsGet({required int id}) async {
     try {
       StationsModel model;
-      var jsonResponse = await api.globalGetRequest(src: 'Stations', Id: id);
+      var jsonResponse = await api.globalGetRequest(src: 'stations', Id: id);
       if (!jsonResponse["error"]) {
         model = StationsModel.fromJson(jsonResponse["results"]);
         displayJsonInLogger(
@@ -391,14 +391,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StationsGet'));
+      throw Exception(getError(e, 'stationsGet'));
     }
   }
 
-  Future<List<StationsModel>?> StationsGetAll() async {
+  Future<List<StationsModel>?> stationsGetAll() async {
     try {
       List<StationsModel> model = [];
-      var jsonResponse = await api.globalGetAllRequest(src: 'Stations');
+      var jsonResponse = await api.globalGetAllRequest(src: 'stations');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -412,13 +412,13 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StationsGet'));
+      throw Exception(getError(e, 'stationsGet'));
     }
   }
 
-  Future<ResponseModel> StationsDelete(int id) async {
+  Future<ResponseModel> stationsDelete(int id) async {
     try {
-      var response = await api.globalDeleteRequest(src: 'Stations', Id: id);
+      var response = await api.globalDeleteRequest(src: 'stations', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -426,11 +426,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StationsDelete'));
+      throw Exception(getError(e, 'stationsDelete'));
     }
   }
 
-  Future<ResponseModel> StationsHandler(
+  Future<ResponseModel> stationsHandler(
       {required StationsModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.stationsHandler(
@@ -444,17 +444,17 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StationsHandler'));
+      throw Exception(getError(e, 'stationsHandler'));
     }
   }
 
-  //StationStatistics
-  Future<StationStatisticsModel?> StationStatisticsGet(
+  //stationstatistics
+  Future<StationStatisticsModel?> stationstatisticsGet(
       {required int id}) async {
     try {
       StationStatisticsModel model;
       var jsonResponse =
-          await api.globalGetRequest(src: 'StationStatistics', Id: id);
+          await api.globalGetRequest(src: 'stationstatistics', Id: id);
       if (!jsonResponse["error"]) {
         model = StationStatisticsModel.fromJson(jsonResponse["results"]);
         displayJsonInLogger(
@@ -464,15 +464,15 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StationStatisticsGet'));
+      throw Exception(getError(e, 'stationstatisticsGet'));
     }
   }
 
-  Future<List<StationStatisticsModel>?> StationStatisticsGetAll() async {
+  Future<List<StationStatisticsModel>?> stationstatisticsGetAll() async {
     try {
       List<StationStatisticsModel> model = [];
       var jsonResponse =
-          await api.globalGetAllRequest(src: 'StationStatistics');
+          await api.globalGetAllRequest(src: 'stationstatistics');
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
@@ -487,14 +487,14 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'StationStatisticsGet'));
+      throw Exception(getError(e, 'stationstatisticsGet'));
     }
   }
 
-  Future<ResponseModel> StationStatisticsDelete(int id) async {
+  Future<ResponseModel> stationstatisticsDelete(int id) async {
     try {
       var response =
-          await api.globalDeleteRequest(src: 'StationStatistics', Id: id);
+          await api.globalDeleteRequest(src: 'stationstatistics', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
       displayJsonInLogger(
         shouldDisplayInLogger: false,
@@ -502,11 +502,11 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StationStatisticsDelete'));
+      throw Exception(getError(e, 'stationstatisticsDelete'));
     }
   }
 
-  Future<ResponseModel> StationStatisticsHandler(
+  Future<ResponseModel> stationStatisticsHandler(
       {required StationStatisticsModel modelData,
       bool shouldUpdate = false}) async {
     try {
@@ -521,12 +521,12 @@ class ApiHelper {
       );
       return model;
     } catch (e) {
-      throw Exception(getError(e, 'StationStatisticsHandler'));
+      throw Exception(getError(e, 'stationstatisticsHandler'));
     }
   }
 
   //Users
-  Future<UsersModel?> UsersGet({required int id}) async {
+  Future<UsersModel?> usersGet({required int id}) async {
     try {
       UsersModel model;
       var jsonResponse = await api.globalGetRequest(src: 'Users', Id: id);
@@ -543,7 +543,7 @@ class ApiHelper {
     }
   }
 
-  Future<List<UsersModel>?> UsersGetAll() async {
+  Future<List<UsersModel>?> usersGetAll() async {
     try {
       List<UsersModel> model = [];
       var jsonResponse = await api.globalGetAllRequest(src: 'Users');
@@ -564,7 +564,7 @@ class ApiHelper {
     }
   }
 
-  Future<ResponseModel> UsersDelete(int id) async {
+  Future<ResponseModel> usersDelete(int id) async {
     try {
       var response = await api.globalDeleteRequest(src: 'Users', Id: id);
       ResponseModel model = ResponseModel.fromJson(response);
@@ -578,7 +578,7 @@ class ApiHelper {
     }
   }
 
-  Future<ResponseModel> UsersHandler(
+  Future<ResponseModel> usersHandler(
       {required UsersModel modelData, bool shouldUpdate = false}) async {
     try {
       var response = await api.usersHandler(

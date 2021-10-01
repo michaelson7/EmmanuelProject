@@ -14,7 +14,7 @@ class UsersProvider extends ChangeNotifier {
   }
 
   Future<UsersModel?> getUsers(int id) async {
-    var result = await _apiHelper.UsersGet(id: id);
+    var result = await _apiHelper.usersGet(id: id);
     if (result != null) {
       _UsersController.add(result);
       return result;
@@ -22,7 +22,7 @@ class UsersProvider extends ChangeNotifier {
   }
 
   Future<List<UsersModel>?> getAllUsers() async {
-    var result = await _apiHelper.UsersGetAll();
+    var result = await _apiHelper.usersGetAll();
     if (result != null) {
       for (var data in result) {
         _UsersController.add(data);
@@ -35,7 +35,7 @@ class UsersProvider extends ChangeNotifier {
     required UsersModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.UsersHandler(
+    var result = await _apiHelper.usersHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

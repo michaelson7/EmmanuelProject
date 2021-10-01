@@ -10,7 +10,6 @@ class NetworkHelper {
     try {
       var headers = <String, String>{"Access-Control-Allow-Origin": "*"};
       http.Response response = await http.get(uriPath, headers: headers);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final responseBody = response.body;
         final decodedJson = jsonDecode(responseBody);
@@ -25,7 +24,15 @@ class NetworkHelper {
 
   Future postResponse() async {
     try {
-      http.Response response = await http.post(uriPath, body: requestBody);
+      var headers = <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var body = json.encode(requestBody);
+      http.Response response = await http.post(
+        uriPath,
+        body: body,
+        headers: headers,
+      );
       if (response.statusCode == 200) {
         final responseBody = response.body;
         final decodedJson = jsonDecode(responseBody);

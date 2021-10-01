@@ -16,7 +16,7 @@ class GaugeStationProvider extends ChangeNotifier {
   }
 
   Future<GaugeStationModel?> getGaugeStation(int id) async {
-    var result = await _apiHelper.GaugeStationGet(id: id);
+    var result = await _apiHelper.gaugeStationGet(id: id);
     if (result != null) {
       _GaugeStationController.add(result);
       return result;
@@ -24,7 +24,7 @@ class GaugeStationProvider extends ChangeNotifier {
   }
 
   Future<List<GaugeStationModel>?> getAllGaugeStation() async {
-    var result = await _apiHelper.GaugeStationGetAll();
+    var result = await _apiHelper.gaugeStationGetAll();
     if (result != null) {
       for (var data in result) {
         _GaugeStationController.add(data);
@@ -37,7 +37,7 @@ class GaugeStationProvider extends ChangeNotifier {
     required GaugeStationModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.GaugeStationHandler(
+    var result = await _apiHelper.gaugeStationHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );

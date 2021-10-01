@@ -17,7 +17,7 @@ class NewsModel {
   dynamic message;
   int userId;
   dynamic imageFile;
-  UsersModel usersModel;
+  UsersModel? usersModel;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
         id: json["id"],
@@ -36,6 +36,6 @@ class NewsModel {
         "message": message,
         "userId": userId,
         "imageFile": imageFile,
-        "usersModel": usersModel.toJson(),
+        "usersModel": usersModel!.toJson(),
       };
 }

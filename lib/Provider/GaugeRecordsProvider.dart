@@ -15,7 +15,7 @@ class GaugeRecordsProvider extends ChangeNotifier {
   }
 
   Future<List<GaugeRecordsModel>?> getGaugeRecords(int id) async {
-    var result = await _apiHelper.GaugeRecordsGet(id: id);
+    var result = await _apiHelper.gaugeRecordsGet(id: id);
     if (result != null) {
       for (var data in result) {
         _GaugeRecordsController.add(data);
@@ -25,7 +25,7 @@ class GaugeRecordsProvider extends ChangeNotifier {
   }
 
   Future<List<GaugeRecordsModel>?> getAllGaugeRecords() async {
-    var result = await _apiHelper.GaugeRecordsGetAll();
+    var result = await _apiHelper.gaugeRecordsGetAll();
     if (result != null) {
       for (var data in result) {
         _GaugeRecordsController.add(data);
@@ -38,7 +38,7 @@ class GaugeRecordsProvider extends ChangeNotifier {
     required GaugeRecordsModel modelData,
     bool shouldUpdate = false,
   }) async {
-    var result = await _apiHelper.GaugeRecordsHandler(
+    var result = await _apiHelper.gaugeRecordsHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
     );
