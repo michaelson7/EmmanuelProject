@@ -5,7 +5,7 @@ class RolesModel {
   });
 
   int id;
-  String title;
+  dynamic title;
 
   factory RolesModel.fromJson(Map<String, dynamic> json) => RolesModel(
         id: json["id"],

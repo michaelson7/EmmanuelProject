@@ -2,45 +2,20 @@ import 'StationStatisticsModel.dart';
 
 class StationsModel {
   StationsModel({
-    this.errorMessage,
-    required this.error,
-    required this.results,
-  });
-
-  dynamic errorMessage;
-  bool error;
-  List<Result> results;
-
-  factory StationsModel.fromJson(Map<String, dynamic> json) => StationsModel(
-        errorMessage: json["errorMessage"],
-        error: json["error"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "errorMessage": errorMessage,
-        "error": error,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     required this.id,
     required this.title,
-    required this.imagePath,
-    required this.imageFile,
+    this.imagePath,
+    this.imageFile,
     required this.stationStatisticsModel,
   });
 
   int id;
-  String title;
-  String imagePath;
+  dynamic title;
+  dynamic imagePath;
   dynamic imageFile;
   StationStatisticsModel stationStatisticsModel;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory StationsModel.fromJson(Map<String, dynamic> json) => StationsModel(
         id: json["id"],
         title: json["title"],
         imagePath: json["imagePath"],

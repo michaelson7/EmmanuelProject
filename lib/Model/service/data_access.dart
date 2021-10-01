@@ -10,7 +10,7 @@ dynamic getResponse(Uri uri) async {
   }
 }
 
-dynamic postResponse(Uri uri, Map<String, dynamic> body) async {
+dynamic postResponse(Uri uri, dynamic body) async {
   NetworkHelper networkHelper = NetworkHelper(uriPath: uri, requestBody: body);
   try {
     final response = await networkHelper.postResponse();

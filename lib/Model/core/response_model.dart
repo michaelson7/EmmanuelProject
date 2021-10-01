@@ -1,7 +1,7 @@
 class ResponseModel {
   dynamic errorMessage;
   bool error;
-  String results;
+  dynamic results;
 
   ResponseModel({
     this.errorMessage,

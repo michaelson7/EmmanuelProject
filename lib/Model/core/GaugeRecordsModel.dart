@@ -1,38 +1,11 @@
-import 'package:flutter_project/Model/core/UsersModel.dart';
-
 import 'GaugeStationModel.dart';
+import 'UsersModel.dart';
 
 class GaugeRecordsModel {
   GaugeRecordsModel({
-    this.errorMessage,
-    required this.error,
-    required this.results,
-  });
-
-  dynamic errorMessage;
-  bool error;
-  List<Result> results;
-
-  factory GaugeRecordsModel.fromJson(Map<String, dynamic> json) =>
-      GaugeRecordsModel(
-        errorMessage: json["errorMessage"],
-        error: json["error"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "errorMessage": errorMessage,
-        "error": error,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     required this.id,
     required this.uploaderId,
-    required this.imagepath,
+    this.imagepath,
     required this.gpsLocation,
     required this.waterlevel,
     required this.temperature,
@@ -44,16 +17,16 @@ class Result {
     required this.uploaderModel,
     required this.approverModel,
     required this.gaugeStationModel,
-    required this.imageFile,
+    this.imageFile,
   });
 
   int id;
   int uploaderId;
-  String imagepath;
-  String gpsLocation;
-  int waterlevel;
-  int temperature;
-  int riverFlow;
+  dynamic imagepath;
+  dynamic gpsLocation;
+  dynamic waterlevel;
+  dynamic temperature;
+  dynamic riverFlow;
   int gaugeId;
   bool approval;
   int approverId;
@@ -63,7 +36,8 @@ class Result {
   GaugeStationModel gaugeStationModel;
   dynamic imageFile;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory GaugeRecordsModel.fromJson(Map<String, dynamic> json) =>
+      GaugeRecordsModel(
         id: json["id"],
         uploaderId: json["uploaderId"],
         imagepath: json["imagepath"],

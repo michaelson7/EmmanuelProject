@@ -2,31 +2,6 @@ import 'RolesModel.dart';
 
 class UsersModel {
   UsersModel({
-    this.errorMessage,
-    required this.error,
-    required this.results,
-  });
-
-  dynamic errorMessage;
-  bool error;
-  List<Result> results;
-
-  factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
-        errorMessage: json["errorMessage"],
-        error: json["error"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "errorMessage": errorMessage,
-        "error": error,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -38,15 +13,15 @@ class Result {
   });
 
   int id;
-  String firstName;
-  String lastName;
-  String email;
-  String password;
+  dynamic firstName;
+  dynamic lastName;
+  dynamic email;
+  dynamic password;
   int roleId;
   DateTime timestamp;
   RolesModel rolesModel;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
         id: json["id"],
         firstName: json["firstName"],
         lastName: json["lastName"],

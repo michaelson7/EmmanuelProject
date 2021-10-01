@@ -1,5 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
+import 'package:flutter_project/Model/core/GaugeStationModel.dart';
+import 'package:flutter_project/Model/core/NewsModel.dart';
 import 'package:flutter_project/Model/core/RolesModel.dart';
-import 'package:flutter_project/Model/core/user_data_model.dart';
+import 'package:flutter_project/Model/core/StaffModel.dart';
+import 'package:flutter_project/Model/core/StationStatisticsModel.dart';
+import 'package:flutter_project/Model/core/StationsModel.dart';
+import 'package:flutter_project/Model/core/UsersModel.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 
 import 'data_access.dart';
@@ -13,9 +21,29 @@ class Api {
       {required RolesModel model, bool shouldUpdate = false}) async {
     urlPath = shouldUpdate ? '/updateRoles' : '/createRoles';
     var modelData = model;
+    final body = jsonEncode({
+      "id": modelData.id.toString(),
+      "title": modelData.title,
+    });
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: true,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  // gaugeStation
+  Future<dynamic> gaugeStationHandler({
+    required GaugeStationModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateGaugeStation' : '/createGaugeStation';
+    var modelData = model;
     final body = {
       "id": modelData.id.toString(),
       "title": modelData.title,
+      "stationId": modelData.stationId.toString(),
     };
     Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
@@ -25,35 +53,132 @@ class Api {
     return await postResponse(uri, body);
   }
 
-  //sample got request
-  Future<dynamic> sampleGet({required email, required password}) async {
-    urlPath = '/login';
-    final requestParameters = {
-      "Email": email,
-      "Password": password,
+  // GaugeRecords
+  Future<dynamic> gaugeRecordsHandler({
+    required GaugeRecordsModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateGaugeRecords' : '/createGaugeRecords';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
+      "uploaderId": model.uploaderId.toString(),
+      "imagepath": modelData.imagepath,
+      "gpsLocation": modelData.gpsLocation,
+      "waterlevel": model.waterlevel.toString(),
+      "temperature": model.gaugeId.toString(),
+      "riverFlow": model.gaugeId.toString(),
+      "gaugeId": model.gaugeId.toString(),
     };
-    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
       shouldDisplayInLogger: false,
       Uri: uri.toString(),
     );
-    return await getResponse(uri);
+    return await postResponse(uri, body);
   }
 
-//sample post request
-  Future<dynamic> samplePost({required UserDataModel model}) async {
-    urlPath = '/EditUserAccount';
-    var modelData = model.results;
+  // News
+  Future<dynamic> newsHandler({
+    required NewsModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateNews' : '/createNews';
+    var modelData = model;
     final body = {
-      "userId": modelData.userId,
+      "id": modelData.id.toString(),
+      "heading": modelData.heading,
+      "imagePath": modelData.imagePath,
+      "message": modelData.message,
+      "userId": modelData.userId.toString(),
+      "imageFile": modelData.imageFile.toString(),
+    };
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  // staff
+  Future<dynamic> staffHandler({
+    required StaffModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateStaff' : '/createStaff';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
+      "salary": modelData.salary.toString(),
+      "userId": modelData.userId.toString(),
+      "stationId": modelData.stationId.toString(),
+    };
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  // Stations
+  Future<dynamic> stationsHandler({
+    required StationsModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateStations' : '/createStations';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
+      "title": modelData.title,
+      "imagePath": modelData.imagePath,
+      "imageFile": modelData.imageFile,
+    };
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  // StationStatistics
+  Future<dynamic> stationStatisticsHandler({
+    required StationStatisticsModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath =
+        shouldUpdate ? '/updateStationStatistics' : '/createStationStatistics';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
+      "stationId": modelData.stationId.toString(),
+      "coordinates": modelData.coordinates,
+      "location": modelData.location
+    };
+    Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  // Users
+  Future<dynamic> usersHandler({
+    required UsersModel model,
+    bool shouldUpdate = false,
+  }) async {
+    urlPath = shouldUpdate ? '/updateUsers' : '/createUsers';
+    var modelData = model;
+    final body = {
+      "id": modelData.id.toString(),
       "firstName": modelData.firstName,
       "lastName": modelData.lastName,
       "email": modelData.email,
       "password": modelData.password,
-      "userLocation": {
-        "location": modelData.lastName,
-        "coordinates": modelData.lastName
-      }
+      "roleId": modelData.roleId.toString(),
     };
     Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
@@ -69,7 +194,7 @@ class Api {
     required int Id,
   }) async {
     urlPath = '/Get$src';
-    final requestParameters = {"Id": Id.toString()};
+    final requestParameters = {"id": Id.toString()};
     Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
     displayUriInLogger(
       shouldDisplayInLogger: false,

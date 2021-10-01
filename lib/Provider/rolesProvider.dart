@@ -13,18 +13,22 @@ class RolesProvider extends ChangeNotifier {
     return _rolesController.stream;
   }
 
-  Future<RolesModel> getRoles(int id) async {
+  Future<RolesModel?> getRoles(int id) async {
     var result = await _apiHelper.rolesGet(id: id);
-    _rolesController.add(result);
-    return result;
+    if (result != null) {
+      _rolesController.add(result);
+      return result;
+    }
   }
 
-  Future<List<RolesModel>> getAllRoles() async {
+  Future<List<RolesModel>?> getAllRoles() async {
     var result = await _apiHelper.rolesGetAll();
-    for (var data in result) {
-      _rolesController.add(data);
+    if (result != null) {
+      for (var data in result) {
+        _rolesController.add(data);
+      }
+      return result;
     }
-    return result;
   }
 
   Future<ResponseModel> rolesHandler({

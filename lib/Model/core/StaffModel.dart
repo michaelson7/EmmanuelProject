@@ -3,31 +3,6 @@ import 'UsersModel.dart';
 
 class StaffModel {
   StaffModel({
-    this.errorMessage,
-    required this.error,
-    required this.results,
-  });
-
-  dynamic errorMessage;
-  bool error;
-  List<Result> results;
-
-  factory StaffModel.fromJson(Map<String, dynamic> json) => StaffModel(
-        errorMessage: json["errorMessage"],
-        error: json["error"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "errorMessage": errorMessage,
-        "error": error,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     required this.id,
     required this.salary,
     required this.userId,
@@ -37,13 +12,13 @@ class Result {
   });
 
   int id;
-  int salary;
+  dynamic salary;
   int userId;
   int stationId;
   UsersModel usersModel;
   StationsModel stationsModel;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory StaffModel.fromJson(Map<String, dynamic> json) => StaffModel(
         id: json["id"],
         salary: json["salary"],
         userId: json["userId"],
