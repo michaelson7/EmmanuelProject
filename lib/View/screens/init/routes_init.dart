@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/Provider/account_provider.dart';
+import 'package:flutter_project/Provider/GaugeRecordsProvider.dart';
+import 'package:flutter_project/Provider/GuageStationProvider.dart';
+import 'package:flutter_project/Provider/NewsProvider.dart';
+import 'package:flutter_project/Provider/StaffProvider.dart';
+import 'package:flutter_project/Provider/StationStatisticsProvider.dart';
+import 'package:flutter_project/Provider/StationsProvider.dart';
+import 'package:flutter_project/Provider/UsersProvider.dart';
+import 'package:flutter_project/Provider/rolesProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/home_activity.dart';
 import 'package:flutter_project/View/screens/activities/login_activity.dart';
@@ -14,7 +21,28 @@ class RoutesInit extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => AccountProvider(),
+          create: (BuildContext context) => GaugeRecordsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => GaugeStationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => NewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => RolesProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => StaffProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => StationsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => StationStatisticsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => UsersProvider(),
         ),
       ],
       child: MaterialApp(

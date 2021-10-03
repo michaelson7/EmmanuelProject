@@ -18,7 +18,7 @@ class _MapFragmentState extends State<MapFragment> {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        center: LatLng(51.5, -0.09),
+        center: LatLng(-15.3868807, 28.3478416),
         zoom: 13.0,
       ),
       layers: [
@@ -34,9 +34,9 @@ class _MapFragmentState extends State<MapFragment> {
             Marker(
               width: 80.0,
               height: 80.0,
-              point: LatLng(51.5, -0.09),
+              point: LatLng(-15.366280295073386, 28.312143003734874),
               builder: (ctx) => Container(
-                child: FlutterLogo(),
+                child: Text('Guage Station One'),
               ),
             ),
           ],

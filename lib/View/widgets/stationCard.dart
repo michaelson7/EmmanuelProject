@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/stationRecords.dart';
 import 'package:get/get.dart';
 import 'ImageCardBackground.dart';
 import 'horizontalWidgetBuilder.dart';
 
-horizontalCardBuilder({required BuildContext context}) {
+horizontalCardBuilder({
+  required BuildContext context,
+  required List<StationsModel>? modelData,
+}) {
   List<Widget> widgetList = [];
-  for (var i = 0; i < 10; i++) {
-    var interface = stationCardDesign(
-      context: context,
-      title: 'Station Name $i',
-    );
+  for (var data in modelData!) {
+    var interface = stationCardDesign(context: context, stationsModel: data);
     widgetList.add(interface);
   }
   var horizontalStyle = horizontalWidgetBuilder(widgetList);
   return horizontalStyle;
 }
 
-gridCardBuilder({required BuildContext context}) {
+gridCardBuilder({
+  required BuildContext context,
+  required List<StationsModel>? modelData,
+}) {
   var size = MediaQuery.of(context).size;
   final double itemHeight = 210;
   final double itemWidth = size.width / 2;
@@ -30,26 +34,20 @@ gridCardBuilder({required BuildContext context}) {
       crossAxisSpacing: 8.0,
       childAspectRatio: (itemWidth / itemHeight),
     ),
-    itemCount: 10,
+    itemCount: modelData!.length,
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
     padding: const EdgeInsets.all(4.0),
     itemBuilder: (BuildContext context, int index) {
       return stationCardDesign(
-        context: context,
-        title: 'Station Name $index',
-      );
+          context: context, stationsModel: modelData[index]);
     },
   );
 }
 
 Card stationCardDesign({
   required BuildContext context,
-  required String title,
-  String imagePath =
-      "https://images.unsplash.com/photo-1593642634524-b40b5baae6bb?ixid=MnwxMjA3f"
-          "DF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=form"
-          "at&fit=crop&w=500&q=60",
+  required StationsModel stationsModel,
 }) {
   return Card(
     color: kCardBackground,
@@ -60,8 +58,8 @@ Card stationCardDesign({
           context,
           MaterialPageRoute(
             builder: (context) => StationGaugeRecords(
-              imgPath: imagePath,
-              stationName: title,
+              imgPath: stationsModel.imagePath,
+              stationName: stationsModel.title,
             ),
           ),
         );
@@ -74,13 +72,13 @@ Card stationCardDesign({
             imageCardBackground(
               width: double.infinity,
               height: 150,
-              imgPath: imagePath,
+              imgPath: stationsModel.imagePath,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  title,
+                  stationsModel.title,
                   softWrap: true,
                   maxLines: 2,
                 ),
