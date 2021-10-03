@@ -13,7 +13,7 @@ import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'data_access.dart';
 
 class Api {
-  String baseUrl = "127.0.0.1:8090";
+  String baseUrl = "10.0.2.2:8090";
   String urlPath = "";
 
   //ROLES

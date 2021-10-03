@@ -1,3 +1,4 @@
+import 'package:flutter_project/View/constants/constants.dart';
 import 'StationStatisticsModel.dart';
 
 class StationsModel {
@@ -18,7 +19,7 @@ class StationsModel {
   factory StationsModel.fromJson(Map<String, dynamic> json) => StationsModel(
         id: json["id"],
         title: json["title"],
-        imagePath: json["imagePath"],
+        imagePath: kImageUrl + json["imagePath"],
         imageFile: json["imageFile"],
         stationStatisticsModel:
             StationStatisticsModel.fromJson(json["stationStatisticsModel"]),

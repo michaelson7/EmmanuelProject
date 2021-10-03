@@ -1,3 +1,5 @@
+import 'package:flutter_project/View/constants/constants.dart';
+
 import 'UsersModel.dart';
 
 class NewsModel {
@@ -22,7 +24,7 @@ class NewsModel {
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
         id: json["id"],
         heading: json["heading"],
-        imagePath: json["imagePath"],
+        imagePath: kImageUrl + json["imagePath"],
         message: json["message"],
         userId: json["userId"],
         imageFile: json["imageFile"],

@@ -15,6 +15,7 @@ import 'package:flutter_project/Provider/StationsProvider.dart';
 import 'package:flutter_project/Provider/UsersProvider.dart';
 import 'package:flutter_project/Provider/rolesProvider.dart';
 import 'package:flutter_project/View/screens/activities/GuageReaderRecords.dart';
+import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -31,7 +32,8 @@ main() {
     RolesModel data = RolesModel(id: 15, title: 'create Sample');
     await _rolesProvider.getRoles(15);
     await _rolesProvider.getAllRoles();
-    await _rolesProvider.rolesHandler(modelData: data);
+    var requestResult = await _rolesProvider.rolesHandler(modelData: data);
+    data = RolesModel(id: requestResult.results, title: 'updated class');
     await _rolesProvider.rolesHandler(modelData: data, shouldUpdate: true);
   });
 
@@ -81,19 +83,19 @@ main() {
   });
 
   test('StationsTests', () async {
-    StationsModel modelData = StationsModel(
-      id: 16,
-      title: 'Update/Create Sample',
-      stationStatisticsModel: null,
-    );
-
-    await _stationProvider.getStations(16);
+    // StationsModel modelData = StationsModel(
+    //   id: 16,
+    //   title: 'Update/Create Sample',
+    //   stationStatisticsModel: null,
+    // );
+    //
+    // await _stationProvider.getStations(16);
     await _stationProvider.getAllStations();
-    await _stationProvider.StationsHandler(modelData: modelData);
-    await _stationProvider.StationsHandler(
-      modelData: modelData,
-      shouldUpdate: true,
-    );
+    // await _stationProvider.StationsHandler(modelData: modelData);
+    // await _stationProvider.StationsHandler(
+    //   modelData: modelData,
+    //   shouldUpdate: true,
+    // );
   });
 
   test('_newsProvider Tests', () async {

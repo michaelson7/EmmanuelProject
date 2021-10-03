@@ -22,34 +22,7 @@ class StationsProvider extends ChangeNotifier {
   }
 
   Future<List<StationsModel>?> getAllStations() async {
-    // var result = await _apiHelper.stationsGetAll();
-    List<StationsModel> result = [
-      StationsModel(
-        id: 5,
-        title: 'title',
-        imagePath:
-            'https://images.unsplash.com/photo-1633113090286-3318ea2d24ae?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmV'
-            'lZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        stationStatisticsModel: null,
-      ),
-      StationsModel(
-        id: 5,
-        title: 'title',
-        imagePath:
-            'https://images.unsplash.com/photo-1633113090286-3318ea2d24ae?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmV'
-            'lZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        stationStatisticsModel: null,
-      ),
-      StationsModel(
-        id: 5,
-        title: 'title',
-        imagePath:
-            'https://images.unsplash.com/photo-1633113090286-3318ea2d24ae?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmV'
-            'lZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        stationStatisticsModel: null,
-      ),
-    ];
-
+    var result = await _apiHelper.stationsGetAll();
     if (result != null) {
       _stationsListController.add(result);
       return result;
