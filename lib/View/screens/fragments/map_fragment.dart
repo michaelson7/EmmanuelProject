@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/ImageCardBackground.dart';
+import 'package:flutter_project/View/widgets/mapMarkers.dart';
 import 'package:flutter_project/View/widgets/stationCard.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -31,18 +32,24 @@ class _MapFragmentState extends State<MapFragment> {
         ),
         MarkerLayerOptions(
           markers: [
-            Marker(
-              width: 80.0,
-              height: 80.0,
-              point: LatLng(-15.366280295073386, 28.312143003734874),
-              builder: (ctx) => Container(
-                child: Text('Guage Station One'),
-              ),
+            mapMarkers(
+              latitude: -15.366280295073386,
+              longitude: 28.312143003734874,
+              title: 'Zambezi Dam',
+            ),
+            mapMarkers(
+              latitude: -15.405354,
+              longitude: 28.313056,
+              title: 'Kariba Dam',
+            ),
+            mapMarkers(
+              latitude: -15.400358,
+              longitude: 28.323056,
+              title: 'Lusaka Dam',
             ),
           ],
         ),
       ],
     );
-    ;
   }
 }

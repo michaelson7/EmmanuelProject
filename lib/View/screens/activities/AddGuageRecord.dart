@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/widgets/inputCard.dart';
 import 'package:flutter_project/View/widgets/outlinedTextFormField.dart';
 
 class AddGuageRecord extends StatefulWidget {
@@ -126,24 +127,6 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text('Submit'),
-        ),
-      ),
-    );
-  }
-
-  Material inputCard({
-    required String title,
-    required TextEditingController controller,
-  }) {
-    return Material(
-      child: Container(
-        child: outlinedTextFormField(
-          title: title,
-          errorText: 'Please input Data',
-          controller: controller,
-          returnedParameter: (value) {
-            //userName = value;
-          },
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/fragments/NewsFragment.dart';
 import 'package:flutter_project/View/screens/fragments/home_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/map_fragment.dart';
+import 'package:flutter_project/View/screens/fragments/profileFragment.dart';
 
 class HomeActivity extends StatefulWidget {
   static String id = "HomeActivity";
@@ -18,8 +19,9 @@ class _HomeActivityState extends State<HomeActivity> {
     HomeFragment(),
     MapFragment(),
     NewsFragment(),
-    HomeFragment(),
+    ProfileFragment(),
   ];
+
   int _selectedIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
 

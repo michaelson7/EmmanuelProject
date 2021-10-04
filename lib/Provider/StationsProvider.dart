@@ -5,6 +5,8 @@ import 'package:flutter_project/Model/core/response_model.dart';
 import 'package:flutter_project/Model/helper/api_helper.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'ImageProvider.dart';
+
 class StationsProvider extends ChangeNotifier {
   final _apiHelper = ApiHelper();
   final _stationsController = BehaviorSubject<StationsModel>();
@@ -22,7 +24,18 @@ class StationsProvider extends ChangeNotifier {
   }
 
   Future<List<StationsModel>?> getAllStations() async {
-    var result = await _apiHelper.stationsGetAll();
+    //var result = await _apiHelper.stationsGetAll();
+    List<StationsModel> result = [];
+    for (var i = 0; i < 10; i++) {
+      var value = StationsModel(
+        id: 1,
+        imagePath: getImage(),
+        title: 'random value',
+        stationStatisticsModel: null,
+      );
+      result.add(value);
+    }
+
     if (result != null) {
       _stationsListController.add(result);
       return result;

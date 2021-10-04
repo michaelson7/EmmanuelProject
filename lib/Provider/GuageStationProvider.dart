@@ -8,27 +8,36 @@ import 'package:rxdart/rxdart.dart';
 
 class GaugeStationProvider extends ChangeNotifier {
   final _apiHelper = ApiHelper();
-  final _GaugeStationController = BehaviorSubject<GaugeStationModel>();
-  GaugeStationModel? gaugeStationModel;
+  final _gaugeStationController = BehaviorSubject<GaugeStationModel>();
+  final _gaugeStationListController =
+      BehaviorSubject<List<GaugeStationModel>>();
 
-  Stream<GaugeStationModel> get getStream {
-    return _GaugeStationController.stream;
-  }
+  get gaugeStationController => _gaugeStationController.stream;
+  get gaugeStationListController => _gaugeStationListController.stream;
 
   Future<GaugeStationModel?> getGaugeStation(int id) async {
     var result = await _apiHelper.gaugeStationGet(id: id);
     if (result != null) {
-      _GaugeStationController.add(result);
+      _gaugeStationController.add(result);
       return result;
     }
   }
 
   Future<List<GaugeStationModel>?> getAllGaugeStation() async {
-    var result = await _apiHelper.gaugeStationGetAll();
+    //var result = await _apiHelper.gaugeStationGetAll();
+    List<GaugeStationModel> result = [];
+    for (var i = 0; i < 10; i++) {
+      var value = GaugeStationModel(
+        id: i,
+        title: 'Sample Title $i',
+        stationId: i + 5,
+        stationsModel: null,
+      );
+      result.add(value);
+    }
+
     if (result != null) {
-      for (var data in result) {
-        _GaugeStationController.add(data);
-      }
+      _gaugeStationListController.add(result);
       return result;
     }
   }

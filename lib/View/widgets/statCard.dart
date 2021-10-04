@@ -3,8 +3,8 @@ import 'package:flutter_project/View/constants/constants.dart';
 
 Container statCard({required String value, required IconData iconData}) {
   return Container(
-    width: 65,
-    height: 65,
+    width: 80,
+    height: 80,
     child: Material(
       color: kCardBackground,
       borderRadius: kBorderRadiusCircular,

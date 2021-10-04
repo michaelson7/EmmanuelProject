@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project/View/widgets/ImageCardBackground.dart';
 
 class NewsActivity extends StatelessWidget {
-  final newsHeader, imgPath;
+  final newsHeader, imgPath, newsMessage;
   const NewsActivity(
-      {Key? key, required this.newsHeader, required this.imgPath})
+      {Key? key,
+      required this.newsHeader,
+      required this.imgPath,
+      this.newsMessage})
       : super(key: key);
 
   @override
@@ -28,7 +31,7 @@ class NewsActivity extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                child: Text('Hello World'),
+                child: Text(newsMessage),
               ),
             ),
           ),

@@ -29,7 +29,10 @@ listTileCard({
               title,
               style: kTextStyleHeader2,
             ),
-            Text(subheading),
+            Text(
+              subheading,
+              maxLines: 1,
+            ),
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_project/Model/core/GaugeStationModel.dart';
+import 'package:flutter_project/Provider/GuageStationProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/ImageCardBackground.dart';
 import 'package:flutter_project/View/widgets/listTileCard.dart';
@@ -26,11 +28,22 @@ class StationGaugeRecords extends StatefulWidget {
 
 class _StationGuageRecordsState extends State<StationGaugeRecords> {
   final String stationName, imgPath;
+  GaugeStationProvider _gaugeStationProvider = GaugeStationProvider();
 
   _StationGuageRecordsState({
     required this.stationName,
     required this.imgPath,
   });
+
+  void loadData() async {
+    await _gaugeStationProvider.getAllGaugeStation();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +63,28 @@ class _StationGuageRecordsState extends State<StationGaugeRecords> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [statsSection(), guageStationSection()],
-                ),
-              ),
-            ),
+            child: StreamBuilder(
+                stream: _gaugeStationProvider.gaugeStationListController,
+                builder: (
+                  context,
+                  AsyncSnapshot<List<GaugeStationModel>> snapshot,
+                ) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            statsSection(),
+                            guageStationSection(snapshot.data)
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }),
           ),
         ],
       ),
@@ -98,7 +124,7 @@ class _StationGuageRecordsState extends State<StationGaugeRecords> {
     );
   }
 
-  guageStationSection() {
+  guageStationSection(List<GaugeStationModel>? data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
@@ -111,11 +137,12 @@ class _StationGuageRecordsState extends State<StationGaugeRecords> {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 10,
+            itemCount: data!.length,
             itemBuilder: (BuildContext context, int index) {
+              var modelData = data[index];
               return listTileCard(
-                  title: 'Sample',
-                  subheading: 'anotherSample $index',
+                  title: modelData.title,
+                  subheading: 'Record ID: ${modelData.id}',
                   function: () {
                     Navigator.push(
                       context,
