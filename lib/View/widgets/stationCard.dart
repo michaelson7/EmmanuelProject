@@ -57,10 +57,7 @@ Card stationCardDesign({
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => StationGaugeRecords(
-              imgPath: stationsModel.imagePath,
-              stationName: stationsModel.title,
-            ),
+            builder: (context) => StationGaugeRecords(stationsModel),
           ),
         );
       },

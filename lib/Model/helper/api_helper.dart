@@ -85,6 +85,7 @@ class ApiHelper {
   }
 
   //gaugeRecords
+
   Future<List<GaugeRecordsModel>?> gaugeRecordsGet({required int id}) async {
     try {
       List<GaugeRecordsModel> model = [];
@@ -163,6 +164,28 @@ class ApiHelper {
   }
 
   //gaugeStation
+  Future<List<GaugeStationModel>?> stationGetGuages({required int id}) async {
+    try {
+      List<GaugeStationModel> model = [];
+      var jsonResponse = await api.stationGetGuages(Id: id);
+      if (!jsonResponse["error"]) {
+        List<dynamic> results = jsonResponse["results"];
+        for (int i = 0; i < results.length; i++) {
+          var modelData =
+              GaugeStationModel.fromJson(jsonResponse["results"][i]);
+          model.add(modelData);
+        }
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'stationGetGuages'));
+    }
+  }
+
   Future<GaugeStationModel?> gaugeStationGet({required int id}) async {
     try {
       GaugeStationModel model;
@@ -608,7 +631,7 @@ class ApiHelper {
     bool shouldDisplayInLogger = false,
     dynamic jsonFile,
   }) {
-    if (!shouldDisplayInLogger) {
+    if (shouldDisplayInLogger) {
       loggerInfo(message: "JSON RESPONSE: $jsonFile");
     }
   }

@@ -42,7 +42,7 @@ class GaugeRecordsModel {
       GaugeRecordsModel(
         id: json["id"],
         uploaderId: json["uploaderId"],
-        imagepath: json["imagepath"],
+        imagepath: "$kImageUrl${json["imagepath"]}",
         gpsLocation: json["gpsLocation"],
         waterlevel: json["waterlevel"],
         temperature: json["temperature"],

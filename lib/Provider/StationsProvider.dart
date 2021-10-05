@@ -24,17 +24,17 @@ class StationsProvider extends ChangeNotifier {
   }
 
   Future<List<StationsModel>?> getAllStations() async {
-    //var result = await _apiHelper.stationsGetAll();
-    List<StationsModel> result = [];
-    for (var i = 0; i < 10; i++) {
-      var value = StationsModel(
-        id: 1,
-        imagePath: getImage(),
-        title: 'random value',
-        stationStatisticsModel: null,
-      );
-      result.add(value);
-    }
+    var result = await _apiHelper.stationsGetAll();
+    // List<StationsModel> result = [];
+    // for (var i = 0; i < 10; i++) {
+    //   var value = StationsModel(
+    //     id: 1,
+    //     imagePath: getImage(),
+    //     title: 'random value',
+    //     stationStatisticsModel: null,
+    //   );
+    //   result.add(value);
+    // }
 
     if (result != null) {
       _stationsListController.add(result);

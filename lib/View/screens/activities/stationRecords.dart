@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
+import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/Provider/GuageStationProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/ImageCardBackground.dart';
@@ -11,32 +12,23 @@ import 'GuageReaderRecords.dart';
 
 class StationGaugeRecords extends StatefulWidget {
   static String id = "StationGaugeRecords";
-  final String stationName, imgPath;
+  final StationsModel stationsModel;
 
-  const StationGaugeRecords({
-    Key? key,
-    required this.stationName,
-    required this.imgPath,
-  }) : super(key: key);
+  StationGaugeRecords(this.stationsModel);
 
   @override
-  _StationGuageRecordsState createState() => _StationGuageRecordsState(
-        stationName: stationName,
-        imgPath: imgPath,
-      );
+  _StationGuageRecordsState createState() =>
+      _StationGuageRecordsState(stationsModel);
 }
 
 class _StationGuageRecordsState extends State<StationGaugeRecords> {
-  final String stationName, imgPath;
+  final StationsModel stationsModel;
   GaugeStationProvider _gaugeStationProvider = GaugeStationProvider();
 
-  _StationGuageRecordsState({
-    required this.stationName,
-    required this.imgPath,
-  });
+  _StationGuageRecordsState(this.stationsModel);
 
   void loadData() async {
-    await _gaugeStationProvider.getAllGaugeStation();
+    await _gaugeStationProvider.stationGetGuages(id: stationsModel.id);
   }
 
   @override
@@ -54,11 +46,11 @@ class _StationGuageRecordsState extends State<StationGaugeRecords> {
             pinned: true,
             expandedHeight: 350.0,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(stationName),
+              title: Text(stationsModel.title),
               background: imageCardBackground(
                 width: double.infinity,
                 height: 350.0,
-                imgPath: imgPath,
+                imgPath: stationsModel.imagePath,
               ),
             ),
           ),
@@ -147,10 +139,7 @@ class _StationGuageRecordsState extends State<StationGaugeRecords> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GuageRecords(
-                          guageStationId: 1,
-                          stationName: stationName,
-                        ),
+                        builder: (context) => GuageRecords(modelData),
                       ),
                     );
                   });

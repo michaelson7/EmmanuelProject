@@ -5,6 +5,11 @@ loggerInfo({required String message}) {
   logger.i(message);
 }
 
+loggerAccent({required String message}) {
+  Logger logger = Logger();
+  logger.wtf(message);
+}
+
 loggerError({required String message}) {
   Logger logger = Logger();
   logger.e(message);

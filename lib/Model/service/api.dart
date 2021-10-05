@@ -13,7 +13,7 @@ import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'data_access.dart';
 
 class Api {
-  String baseUrl = "10.0.2.2:8090";
+  String baseUrl = "hydroapp.api:8090";
   String urlPath = "";
 
   //ROLES
@@ -66,8 +66,8 @@ class Api {
       "imagepath": modelData.imagepath,
       "gpsLocation": modelData.gpsLocation,
       "waterlevel": model.waterlevel.toString(),
-      "temperature": model.gaugeId.toString(),
-      "riverFlow": model.gaugeId.toString(),
+      "temperature": model.temperature.toString(),
+      "riverFlow": model.riverFlow.toString(),
       "gaugeId": model.gaugeId.toString(),
     };
     Uri uri = Uri.http(baseUrl, urlPath);
@@ -136,6 +136,20 @@ class Api {
       "imageFile": modelData.imageFile,
     };
     Uri uri = Uri.http(baseUrl, urlPath);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await postResponse(uri, body);
+  }
+
+  Future<dynamic> stationGetGuages({
+    required int Id,
+  }) async {
+    urlPath = '/StationsGetGauge';
+    final requestParameters = {"id": Id.toString()};
+    final body = {};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
     displayUriInLogger(
       shouldDisplayInLogger: false,
       Uri: uri.toString(),
@@ -228,7 +242,7 @@ class Api {
   }
 
   void displayUriInLogger({bool shouldDisplayInLogger = false, dynamic Uri}) {
-    if (!shouldDisplayInLogger) {
+    if (shouldDisplayInLogger) {
       loggerInfo(message: "URI: $Uri");
     }
   }

@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/outlinedTextFormField.dart';
 
-import 'RegistrationActivity.dart';
 import 'home_activity.dart';
 
-class LoginActivity extends StatefulWidget {
-  static String id = "LoginActivity";
-  const LoginActivity({Key? key}) : super(key: key);
+class RegistrationActivity extends StatefulWidget {
+  static String id = "RegistrationActivity";
+  const RegistrationActivity({Key? key}) : super(key: key);
 
   @override
-  _LoginActivityState createState() => _LoginActivityState();
+  _RegistrationActivityState createState() => _RegistrationActivityState();
 }
 
-class _LoginActivityState extends State<LoginActivity> {
+class _RegistrationActivityState extends State<RegistrationActivity> {
   final _key = GlobalKey<FormState>();
   var emailController = TextEditingController(),
       passwordController = TextEditingController();
@@ -38,19 +38,23 @@ class _LoginActivityState extends State<LoginActivity> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(child: SizedBox()),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: FlutterLogo(),
+            ),
             Text(
-              'Hey\nLogin Now',
+              'Registration',
               style: kTextStyleHeader1,
             ),
             Row(
               children: [
-                Text('If you are new / ', style: kTextStyleHint),
+                Text('Already Have An Account? ', style: kTextStyleHint),
                 InkWell(
                   onTap: () {
                     Navigator.popAndPushNamed(context, RegistrationActivity.id);
                   },
                   child: Text(
-                    'Create Account',
+                    'Login',
                     style: TextStyle(color: kAccent),
                   ),
                 ),
@@ -78,18 +82,6 @@ class _LoginActivityState extends State<LoginActivity> {
               },
             ),
             SizedBox(height: 15),
-            Row(
-              children: [
-                Text('Forgot Password / ', style: kTextStyleHint),
-                InkWell(
-                  onTap: () {},
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(color: kAccent),
-                  ),
-                ),
-              ],
-            ),
             Expanded(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -100,7 +92,7 @@ class _LoginActivityState extends State<LoginActivity> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'LOGIN',
+                      'Register',
                       style: kTextStyleHeader2,
                     ),
                   ),

@@ -18,35 +18,13 @@ class GaugeRecordsProvider extends ChangeNotifier {
   Future<List<GaugeRecordsModel>?> getGaugeRecords(int id) async {
     var result = await _apiHelper.gaugeRecordsGet(id: id);
     if (result != null) {
-      for (var data in result) {
-        _GaugeRecordsController.add(data);
-      }
+      _GaugeRecordsListController.add(result);
       return result;
     }
   }
 
   Future<List<GaugeRecordsModel>?> getAllGaugeRecords() async {
-    //var result = await _apiHelper.gaugeRecordsGetAll();.
-    List<GaugeRecordsModel> result = [];
-    for (var i = 0; i < 10; i++) {
-      var data = GaugeRecordsModel(
-        id: i,
-        uploaderId: i,
-        gpsLocation: '0000-0000-0000-0000',
-        waterlevel: 12,
-        temperature: 32,
-        riverFlow: 43.2,
-        gaugeId: i,
-        approval: false,
-        approverId: 0,
-        timestamp: null,
-        uploaderModel: null,
-        approverModel: null,
-        gaugeStationModel: null,
-        imagepath: getImage(),
-      );
-      result.add(data);
-    }
+    var result = await _apiHelper.gaugeRecordsGetAll();
     if (result != null) {
       _GaugeRecordsListController.add(result);
       return result;

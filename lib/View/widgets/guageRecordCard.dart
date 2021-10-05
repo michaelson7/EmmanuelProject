@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
+import 'package:flutter_project/Model/core/GaugeStationModel.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/AddGuageRecord.dart';
 
@@ -8,7 +9,8 @@ guageRecordCard(
     {required BuildContext context,
     required int guageRecordId,
     required String guageStationName,
-    required GaugeRecordsModel modelData}) {
+    required GaugeRecordsModel modelData,
+    required GaugeStationModel gaugeStationMode}) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4),
     child: Material(
@@ -20,8 +22,8 @@ guageRecordCard(
             context,
             MaterialPageRoute(
               builder: (context) => AddGuageRecord(
-                guageStationName: guageStationName,
-                guageRecordId: guageRecordId,
+                gaugeRecordsModel: modelData,
+                gaugeStationMode: gaugeStationMode,
               ),
             ),
           );
@@ -41,6 +43,15 @@ guageRecordCard(
                           borderRadius: kBorderRadiusCircular,
                           child: CachedNetworkImage(
                             imageUrl: modelData.imagepath,
+                            errorWidget: (context, url, error) => Container(
+                              color: Colors.grey[900],
+                              child: Icon(
+                                Icons.error,
+                              ),
+                            ),
+                            placeholder: (context, url) => Container(
+                              color: kAccent,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),

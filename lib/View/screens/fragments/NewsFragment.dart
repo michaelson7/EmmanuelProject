@@ -119,11 +119,11 @@ class _NewsFragmentState extends State<NewsFragment> {
                     itemCount: data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       var newsValue = data[index];
-                      return listTileCard(
-                          title: newsValue.heading,
-                          subheading: newsValue.message,
-                          function: () {
-                            Navigator.push(
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => NewsActivity(
@@ -132,8 +132,29 @@ class _NewsFragmentState extends State<NewsFragment> {
                                   newsMessage: newsValue.message,
                                 ),
                               ),
-                            );
-                          });
+                            ),
+                            child: ListTile(
+                              leading: Container(
+                                width: 80,
+                                child: ClipRRect(
+                                  borderRadius: kBorderRadiusCircular,
+                                  child: CachedNetworkImage(
+                                    imageUrl: newsValue.imagePath,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              title: Text(newsValue.heading),
+                              subtitle: Text(
+                                newsValue.message,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.white)
+                        ],
+                      );
                     },
                   );
                 }

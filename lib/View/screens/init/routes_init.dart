@@ -8,6 +8,7 @@ import 'package:flutter_project/Provider/StationsProvider.dart';
 import 'package:flutter_project/Provider/UsersProvider.dart';
 import 'package:flutter_project/Provider/rolesProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/screens/activities/RegistrationActivity.dart';
 import 'package:flutter_project/View/screens/activities/home_activity.dart';
 import 'package:flutter_project/View/screens/activities/login_activity.dart';
 import 'package:flutter_project/View/screens/activities/stationRecords.dart';
@@ -81,6 +82,7 @@ class RoutesInit extends StatelessWidget {
         routes: {
           HomeActivity.id: (context) => HomeActivity(),
           LoginActivity.id: (context) => LoginActivity(),
+          RegistrationActivity.id: (context) => RegistrationActivity(),
         },
       ),
     );

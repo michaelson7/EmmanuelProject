@@ -24,18 +24,15 @@ class GaugeStationProvider extends ChangeNotifier {
   }
 
   Future<List<GaugeStationModel>?> getAllGaugeStation() async {
-    //var result = await _apiHelper.gaugeStationGetAll();
-    List<GaugeStationModel> result = [];
-    for (var i = 0; i < 10; i++) {
-      var value = GaugeStationModel(
-        id: i,
-        title: 'Sample Title $i',
-        stationId: i + 5,
-        stationsModel: null,
-      );
-      result.add(value);
+    var result = await _apiHelper.gaugeStationGetAll();
+    if (result != null) {
+      _gaugeStationListController.add(result);
+      return result;
     }
+  }
 
+  Future<List<GaugeStationModel>?> stationGetGuages({required int id}) async {
+    var result = await _apiHelper.stationGetGuages(id: id);
     if (result != null) {
       _gaugeStationListController.add(result);
       return result;

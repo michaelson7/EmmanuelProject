@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
+import 'package:flutter_project/Model/core/GaugeStationModel.dart';
 import 'package:flutter_project/Provider/GaugeRecordsProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/guageRecordCard.dart';
@@ -9,29 +10,22 @@ import 'package:flutter_project/View/widgets/guageRecordCard.dart';
 import 'AddGuageRecord.dart';
 
 class GuageRecords extends StatefulWidget {
-  final int guageStationId;
-  final String stationName;
-  const GuageRecords({
-    Key? key,
-    required this.guageStationId,
-    required this.stationName,
-  }) : super(key: key);
+  GaugeStationModel gaugeStationMode;
+  GuageRecords(this.gaugeStationMode);
 
   @override
-  _GuageRecordsState createState() =>
-      _GuageRecordsState(guageStationId, stationName);
+  _GuageRecordsState createState() => _GuageRecordsState(gaugeStationMode);
 }
 
 class _GuageRecordsState extends State<GuageRecords> {
-  final int guageStationId;
-  final String stationName;
+  GaugeStationModel gaugeStationModel;
   bool isLoading = false;
   GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
 
-  _GuageRecordsState(this.guageStationId, this.stationName);
+  _GuageRecordsState(this.gaugeStationModel);
 
   getData() async {
-    _gaugeRecordsProvider.getAllGaugeRecords();
+    _gaugeRecordsProvider.getGaugeRecords(gaugeStationModel.id);
     setState(() => isLoading = false);
   }
 
@@ -45,7 +39,7 @@ class _GuageRecordsState extends State<GuageRecords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(stationName),
+        title: Text(gaugeStationModel.stationsModel!.title),
       ),
       body: SafeArea(
         child: mainBody(),
@@ -56,8 +50,7 @@ class _GuageRecordsState extends State<GuageRecords> {
             context,
             MaterialPageRoute(
               builder: (context) => AddGuageRecord(
-                guageStationName: stationName,
-                guageRecordId: guageStationId,
+                gaugeStationMode: widget.gaugeStationMode,
               ),
             ),
           );
@@ -86,9 +79,11 @@ class _GuageRecordsState extends State<GuageRecords> {
                     var dataValue = data[index];
                     return guageRecordCard(
                       context: context,
-                      guageStationName: stationName,
+                      guageStationName:
+                          widget.gaugeStationMode.stationsModel!.title,
                       guageRecordId: 1,
                       modelData: dataValue,
+                      gaugeStationMode: widget.gaugeStationMode,
                     );
                   },
                 );
