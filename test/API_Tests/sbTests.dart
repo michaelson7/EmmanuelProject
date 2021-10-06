@@ -90,7 +90,14 @@ main() {
     // );
     //
     // await _stationProvider.getStations(16);
-    await _stationProvider.getAllStations();
+    //await _stationProvider.getAllStations();
+    var data = await _stationProvider.stationsGetHistoricalData(stationId: 16);
+    if (data != null) {
+      for (var value in data) {
+        loggerAccent(message: value.toJson().toString());
+      }
+    }
+
     // await _stationProvider.StationsHandler(modelData: modelData);
     // await _stationProvider.StationsHandler(
     //   modelData: modelData,
