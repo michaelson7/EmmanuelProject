@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/screens/activities/HistoricalDataActivity.dart';
 import 'package:flutter_project/View/screens/activities/stationRecords.dart';
 import 'package:get/get.dart';
 import 'ImageCardBackground.dart';
@@ -19,10 +20,10 @@ horizontalCardBuilder({
   return horizontalStyle;
 }
 
-gridCardBuilder({
-  required BuildContext context,
-  required List<StationsModel>? modelData,
-}) {
+gridCardBuilder(
+    {required BuildContext context,
+    required List<StationsModel>? modelData,
+    bool openHistorical = false}) {
   var size = MediaQuery.of(context).size;
   final double itemHeight = 210;
   final double itemWidth = size.width / 2;
@@ -40,7 +41,10 @@ gridCardBuilder({
     padding: const EdgeInsets.all(4.0),
     itemBuilder: (BuildContext context, int index) {
       return stationCardDesign(
-          context: context, stationsModel: modelData[index]);
+        context: context,
+        stationsModel: modelData[index],
+        openHistorical: openHistorical,
+      );
     },
   );
 }
@@ -48,6 +52,7 @@ gridCardBuilder({
 Card stationCardDesign({
   required BuildContext context,
   required StationsModel stationsModel,
+  bool openHistorical = false,
 }) {
   return Card(
     color: kCardBackground,
@@ -57,7 +62,9 @@ Card stationCardDesign({
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => StationGaugeRecords(stationsModel),
+            builder: (context) => openHistorical
+                ? HistoricalDataActivity(stationsModel)
+                : StationGaugeRecords(stationsModel),
           ),
         );
       },
