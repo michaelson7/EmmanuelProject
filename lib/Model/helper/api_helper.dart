@@ -1,5 +1,6 @@
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
+import 'package:flutter_project/Model/core/HostoricalDataModel.dart';
 import 'package:flutter_project/Model/core/NewsModel.dart';
 import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/StaffModel.dart';
@@ -462,6 +463,33 @@ class ApiHelper {
       }
     } catch (e) {
       throw Exception(getError(e, 'stationsGetAll'));
+    }
+  }
+
+  Future<List<HistoricalDataModel>?> stationsGetHistoricalData({
+    required int stationId,
+  }) async {
+    try {
+      List<HistoricalDataModel> model = [];
+      var jsonResponse = await api.stationsGetHistoricalData(
+        stationId: stationId,
+      );
+      if (!jsonResponse["error"]) {
+        List<dynamic> results = jsonResponse["results"];
+        for (int i = 0; i < results.length; i++) {
+          var modelData = HistoricalDataModel.fromJson(
+            jsonResponse["results"][i],
+          );
+          model.add(modelData);
+        }
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'stationsGetHistoricalData'));
     }
   }
 

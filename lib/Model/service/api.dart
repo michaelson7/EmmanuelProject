@@ -144,6 +144,17 @@ class Api {
     return await postResponse(uri, body);
   }
 
+  Future<dynamic> stationsGetHistoricalData({required int stationId}) async {
+    urlPath = '/getHistoricalDataStations';
+    final requestParameters = {"stationId": stationId.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
+  }
+
   Future<dynamic> stationGetGuages({
     required int Id,
   }) async {
