@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
+import 'package:flutter_project/Model/core/StationStatsModel.dart';
 import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/Provider/GaugeRecordsProvider.dart';
 import 'package:flutter_project/Provider/GuageStationProvider.dart';
+import 'package:flutter_project/Provider/StationsProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/GuageReaderRecords.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
@@ -19,8 +21,7 @@ class HistoricalDataActivity extends StatefulWidget {
 
 class _HistoricalDataActivityState extends State<HistoricalDataActivity> {
   final StationsModel stationsModel;
-  GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
-  GaugeStationProvider _gaugeStationProvider = GaugeStationProvider();
+  StationsProvider _stationsProvider = StationsProvider();
 
   List<_chartData> tempData = [];
   List<_chartData> flowData = [];
@@ -38,18 +39,11 @@ class _HistoricalDataActivityState extends State<HistoricalDataActivity> {
   }
 
   getData() async {
-    var gaugeData = await _gaugeStationProvider.stationGetGuages(
-      id: stationsModel.id,
-    );
-    if (gaugeData != null) {
-      for (var data in gaugeData) {
-        var results = await _gaugeRecordsProvider.getGaugeRecords(data.id);
-        if (results != null) {
-          getTemperatureData(results);
-          getFlowData(results);
-          getLevelData(results);
-        }
-      }
+    var recordData = await _stationsProvider.getStationStats(stationsModel.id);
+    if (recordData != null) {
+      getTemperatureData(recordData);
+      getFlowData(recordData);
+      getLevelData(recordData);
     }
   }
 
@@ -147,69 +141,72 @@ class _HistoricalDataActivityState extends State<HistoricalDataActivity> {
     );
   }
 
-  void getTemperatureData(List<GaugeRecordsModel> results) {
+  void getTemperatureData(List<StationStatsModel> dataObject) {
     setState(() {
-      for (var data in results) {
-        var tempDataValues = _chartData(
-          month: data.id.toString(),
-          value: data.temperature,
-        );
-        tempData.add(tempDataValues);
-      }
-
-      tempDataValues = [
-        LineSeries<_chartData, String>(
-          dataSource: tempData,
+      for (var data in dataObject) {
+        List<_chartData> dataList = [];
+        for (var stats in data.stationStatsModel) {
+          var tempDataValuesData = _chartData(
+            month: stats.month,
+            value: stats.temperature,
+          );
+          dataList.add(tempDataValuesData);
+        }
+        var lineData = LineSeries<_chartData, String>(
+          dataSource: dataList,
           xValueMapper: (_chartData temps, _) => temps.month,
           yValueMapper: (_chartData temps, _) => temps.value,
-          name: '2011',
+          name: data.year,
           dataLabelSettings: DataLabelSettings(isVisible: false),
-        ),
-      ];
+        );
+        tempDataValues.add(lineData);
+      }
     });
   }
 
-  void getFlowData(List<GaugeRecordsModel> results) {
+  void getFlowData(List<StationStatsModel> dataObject) {
     setState(() {
-      for (var data in results) {
-        var tempDataValues = _chartData(
-          month: data.id.toString(),
-          value: data.riverFlow,
-        );
-        flowData.add(tempDataValues);
-      }
-
-      flowDataValues = [
-        LineSeries<_chartData, String>(
-          dataSource: flowData,
+      for (var data in dataObject) {
+        List<_chartData> dataList = [];
+        for (var stats in data.stationStatsModel) {
+          var tempDataValuesData = _chartData(
+            month: stats.month,
+            value: stats.riverFlow,
+          );
+          dataList.add(tempDataValuesData);
+        }
+        var lineData = LineSeries<_chartData, String>(
+          dataSource: dataList,
           xValueMapper: (_chartData temps, _) => temps.month,
           yValueMapper: (_chartData temps, _) => temps.value,
-          name: '2011',
+          name: data.year,
           dataLabelSettings: DataLabelSettings(isVisible: false),
-        ),
-      ];
+        );
+        flowDataValues.add(lineData);
+      }
     });
   }
 
-  void getLevelData(List<GaugeRecordsModel> results) {
+  void getLevelData(List<StationStatsModel> dataObject) {
     setState(() {
-      for (var data in results) {
-        var tempDataValues = _chartData(
-          month: data.id.toString(),
-          value: data.waterlevel,
-        );
-        levelData.add(tempDataValues);
-      }
-
-      levelDataValues = [
-        LineSeries<_chartData, String>(
-          dataSource: levelData,
+      for (var data in dataObject) {
+        List<_chartData> dataList = [];
+        for (var stats in data.stationStatsModel) {
+          var tempDataValuesData = _chartData(
+            month: stats.month,
+            value: stats.waterLevel,
+          );
+          dataList.add(tempDataValuesData);
+        }
+        var lineData = LineSeries<_chartData, String>(
+          dataSource: dataList,
           xValueMapper: (_chartData temps, _) => temps.month,
           yValueMapper: (_chartData temps, _) => temps.value,
-          name: '2011',
+          name: data.year,
           dataLabelSettings: DataLabelSettings(isVisible: false),
-        ),
-      ];
+        );
+        levelDataValues.add(lineData);
+      }
     });
   }
 }

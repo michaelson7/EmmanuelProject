@@ -8,9 +8,7 @@ class NetworkHelper {
 
   Future getResponse() async {
     try {
-      var headers = <String, String>{
-        "Access-Control-Allow-Origin": "*",
-      };
+      var headers = <String, String>{"Access-Control-Allow-Origin": "*"};
       http.Response response = await http.get(uriPath, headers: headers);
       if (response.statusCode == 200) {
         final responseBody = response.body;

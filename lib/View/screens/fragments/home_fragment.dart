@@ -65,23 +65,6 @@ class _HomeFragmentState extends State<HomeFragment> {
         Text('Hello,', style: kTextStyleHeader1),
         Text('Lets get started', style: kTextStyleHint),
         SizedBox(height: 8),
-        Material(
-          borderRadius: kBorderRadiusCircular,
-          color: kCardBackground,
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              child: ListTile(
-                leading: Icon(
-                  FontAwesome.search,
-                  color: Colors.grey,
-                ),
-                title: Text('Search for station', style: kTextStyleHint),
-              ),
-            ),
-          ),
-        )
       ],
     );
   }

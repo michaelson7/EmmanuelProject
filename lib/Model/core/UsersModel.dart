@@ -29,7 +29,7 @@ class UsersModel {
         password: json["password"],
         roleId: json["roleId"],
         timestamp: DateTime.parse(json["timestamp"]),
-        rolesModel: RolesModel.fromJson(json["rolesModel"]),
+        rolesModel: RolesModel.fromJson(json["rolesData"]),
       );
 
   Map<String, dynamic> toJson() => {

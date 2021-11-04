@@ -13,7 +13,8 @@ import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'data_access.dart';
 
 class Api {
-  String baseUrl = "hydroapp.api:8090";
+  // String baseUrl = "127.0.0.1:8090";
+  String baseUrl = "10.0.2.2:8090";
   String urlPath = "";
 
   //ROLES
@@ -27,7 +28,7 @@ class Api {
     };
     Uri uri = Uri.http(baseUrl, urlPath);
     displayUriInLogger(
-      shouldDisplayInLogger: true,
+      shouldDisplayInLogger: false,
       Uri: uri.toString(),
     );
     return await postResponse(uri, body);
@@ -200,6 +201,26 @@ class Api {
       Uri: uri.toString(),
     );
     return await postResponse(uri, body);
+  }
+
+  //stats
+  Future<dynamic> stationGetStats({
+    required int stationId,
+  }) async {
+    urlPath = '/getHistoricalDataStations';
+    final requestParameters = {
+      "stationId": stationId.toString(),
+    };
+    Uri uri = Uri.http(
+      baseUrl,
+      urlPath,
+      requestParameters,
+    );
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
   }
 
   //------------------------------------------------------------------------------global requests

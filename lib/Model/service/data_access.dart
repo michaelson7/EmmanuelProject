@@ -6,7 +6,7 @@ dynamic getResponse(Uri uri) async {
     final response = await networkHelper.getResponse();
     return response;
   } catch (e) {
-    throw Exception('Error while parsing get-response: $e');
+    throw Exception('Error while parsing get-response: $e\n@$uri');
   }
 }
 

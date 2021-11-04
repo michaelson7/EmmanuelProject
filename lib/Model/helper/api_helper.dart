@@ -4,6 +4,7 @@ import 'package:flutter_project/Model/core/NewsModel.dart';
 import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/StaffModel.dart';
 import 'package:flutter_project/Model/core/StationStatisticsModel.dart';
+import 'package:flutter_project/Model/core/StationStatsModel.dart';
 import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/Model/core/UsersModel.dart';
 import 'package:flutter_project/Model/core/response_model.dart';
@@ -186,6 +187,31 @@ class ApiHelper {
     }
   }
 
+  Future<List<StationStatsModel>?> stationGetStats({
+    required int stationId,
+  }) async {
+    try {
+      List<StationStatsModel> model = [];
+      var jsonResponse = await api.stationGetStats(stationId: stationId);
+      if (!jsonResponse["error"]) {
+        List<dynamic> results = jsonResponse["results"];
+        for (int i = 0; i < results.length; i++) {
+          var modelData = StationStatsModel.fromJson(
+            jsonResponse["results"][i],
+          );
+          model.add(modelData);
+        }
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'stationGetStats'));
+    }
+  }
+
   Future<GaugeStationModel?> gaugeStationGet({required int id}) async {
     try {
       GaugeStationModel model;
@@ -293,7 +319,7 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'newsGet'));
+      throw Exception(getError(e, 'newsGetAll'));
     }
   }
 
@@ -435,7 +461,7 @@ class ApiHelper {
         return model;
       }
     } catch (e) {
-      throw Exception(getError(e, 'stationsGet'));
+      throw Exception(getError(e, 'stationsGetAll'));
     }
   }
 

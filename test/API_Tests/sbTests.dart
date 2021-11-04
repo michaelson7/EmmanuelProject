@@ -29,8 +29,8 @@ main() {
   UsersProvider _usersProvider = UsersProvider();
 
   test('RolesTests', () async {
-    RolesModel data = RolesModel(id: 15, title: 'create Sample');
-    await _rolesProvider.getRoles(15);
+    RolesModel data = RolesModel(id: 3, title: 'create Sample');
+    await _rolesProvider.getRoles(3);
     await _rolesProvider.getAllRoles();
     var requestResult = await _rolesProvider.rolesHandler(modelData: data);
     data = RolesModel(id: requestResult.results, title: 'updated class');
@@ -73,6 +73,7 @@ main() {
       stationId: stationData!.first.id,
       stationsModel: null,
     );
+
     await _gaugeStationProvider.getGaugeStation(4);
     await _gaugeStationProvider.getAllGaugeStation();
     await _gaugeStationProvider.GaugeStationHandler(modelData: data);
@@ -88,9 +89,10 @@ main() {
     //   title: 'Update/Create Sample',
     //   stationStatisticsModel: null,
     // );
-    //
-    // await _stationProvider.getStations(16);
+
+    //await _stationProvider.getStations(16);
     await _stationProvider.getAllStations();
+    // await _stationProvider.getStationStats(16);
     // await _stationProvider.StationsHandler(modelData: modelData);
     // await _stationProvider.StationsHandler(
     //   modelData: modelData,
@@ -99,21 +101,24 @@ main() {
   });
 
   test('_newsProvider Tests', () async {
-    var userData = await _usersProvider.getAllUsers();
-    NewsModel modelData = NewsModel(
-      id: 3,
-      heading: 'Header',
-      message: 'message',
-      userId: userData!.first.id,
-      usersModel: null,
-    );
-    await _newsProvider.getNews(3);
-    await _newsProvider.getAllNews();
-    await _newsProvider.NewsHandler(modelData: modelData);
-    await _newsProvider.NewsHandler(
-      modelData: modelData,
-      shouldUpdate: true,
-    );
+    // var userData = await _usersProvider.getAllUsers();
+    // NewsModel modelData = NewsModel(
+    //   id: 3,
+    //   heading: 'Header',
+    //   message: 'message',
+    //   userId: userData!.first.id,
+    //   usersModel: null,
+    // );
+    //await _newsProvider.getNews(3);
+    var data = await _newsProvider.getAllNews();
+    for (var list in data!) {
+      loggerInfo(message: list.toJson().toString());
+    }
+    // await _newsProvider.NewsHandler(modelData: modelData);
+    // await _newsProvider.NewsHandler(
+    //   modelData: modelData,
+    //   shouldUpdate: true,
+    // );
   });
 
   test('_staffProvider Tests', () async {

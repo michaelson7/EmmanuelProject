@@ -6,6 +6,7 @@ import 'package:flutter_project/View/screens/fragments/historicalData.dart';
 import 'package:flutter_project/View/screens/fragments/home_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/map_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/profileFragment.dart';
+import 'package:flutter_project/View/widgets/logger_widget.dart';
 
 class HomeActivity extends StatefulWidget {
   static String id = "HomeActivity";
@@ -34,17 +35,13 @@ class _HomeActivityState extends State<HomeActivity> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('App Name'),
+              title: Text('Hydro App'),
               floating: true,
               snap: true,
               actions: [
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.search),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.shopping_bag),
+                  onPressed: logOut(),
+                  icon: Icon(Icons.logout),
                 ),
               ],
             ),
@@ -97,5 +94,43 @@ class _HomeActivityState extends State<HomeActivity> {
       _selectedIndex = index;
       _pageController.jumpToPage(index);
     });
+  }
+
+  logOut() {
+    // set up the buttons
+    // Widget cancelButton = FlatButton(
+    //   child: Text("Cancel"),
+    //   onPressed: () {
+    //     Navigator.of(context).pop();
+    //   },
+    // );
+    // Widget continueButton = FlatButton(
+    //   child: Text("Sign Out"),
+    //   onPressed: () {
+    //     Navigator.of(context).pop();
+    //   },
+    // );
+    // // set up the AlertDialog
+    // AlertDialog alert = AlertDialog(
+    //   title: Text("SIgn Out"),
+    //   content: Text(
+    //     "Are you sure you want to sign out?",
+    //   ),
+    //   actions: [
+    //     cancelButton,
+    //     continueButton,
+    //   ],
+    // );
+    // show the dialog
+    // try {
+    //   showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return alert;
+    //     },
+    //   );
+    // } catch (e) {
+    //   loggerError(message: e.toString());
+    // }
   }
 }

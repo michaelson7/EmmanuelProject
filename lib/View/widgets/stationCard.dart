@@ -25,7 +25,7 @@ gridCardBuilder(
     required List<StationsModel>? modelData,
     bool openHistorical = false}) {
   var size = MediaQuery.of(context).size;
-  final double itemHeight = 210;
+  final double itemHeight = 220;
   final double itemWidth = size.width / 2;
 
   return GridView.builder(
@@ -79,7 +79,7 @@ Card stationCardDesign({
               imgPath: stationsModel.imagePath,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
                   stationsModel.title,
