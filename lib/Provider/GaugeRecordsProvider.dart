@@ -4,6 +4,7 @@ import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/response_model.dart';
 import 'package:flutter_project/Model/helper/api_helper.dart';
 import 'package:flutter_project/Provider/ImageProvider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GaugeRecordsProvider extends ChangeNotifier {
@@ -38,6 +39,19 @@ class GaugeRecordsProvider extends ChangeNotifier {
     var result = await _apiHelper.gaugeRecordsHandler(
       modelData: modelData,
       shouldUpdate: shouldUpdate,
+    );
+    return result;
+  }
+
+  Future<ResponseModel> gaugeRecordsUpload({
+    required GaugeRecordsModel modelData,
+    bool shouldUpdate = false,
+    required XFile file,
+  }) async {
+    var result = await _apiHelper.gaugeRecordsUpload(
+      modelData: modelData,
+      shouldUpdate: shouldUpdate,
+      file: file,
     );
     return result;
   }

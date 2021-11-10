@@ -41,4 +41,24 @@ class UsersProvider extends ChangeNotifier {
     );
     return result;
   }
+
+  Future<UsersModel?> usersLogin({
+    required String email,
+    required String password,
+  }) async {
+    var result = await _apiHelper.usersLogin(
+      email: email,
+      password: password,
+    );
+    return result;
+  }
+
+  Future<ResponseModel?> usersRegistration(
+      {required UsersModel usersModel, bool showResponse = false}) async {
+    var result = await _apiHelper.usersRegistration(
+      usersModel: usersModel,
+      showResponse: showResponse,
+    );
+    return result;
+  }
 }

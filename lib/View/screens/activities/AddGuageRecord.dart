@@ -1,11 +1,18 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
+import 'package:flutter_project/Model/service/api.dart';
 import 'package:flutter_project/Provider/GaugeRecordsProvider.dart';
+import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/constants/enums.dart';
 import 'package:flutter_project/View/widgets/inputCard.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'package:flutter_project/View/widgets/outlinedTextFormField.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddGuageRecord extends StatefulWidget {
   final GaugeStationModel gaugeStationMode;
@@ -25,6 +32,9 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
       riverFlowController = TextEditingController(),
       guageNameController = TextEditingController(),
       guageIdController = TextEditingController();
+  var imageFile = null;
+  SharedPreferenceProvider _sharedPreferenceProvider =
+      SharedPreferenceProvider();
   GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
   final _key = GlobalKey<FormState>();
 
@@ -82,16 +92,42 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
   }
 
   imageHandler() {
+    Future<void> attachImage() async {
+      var picker = ImagePicker();
+      var pickedFile = await picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 50,
+      );
+      if (pickedFile != null) {
+        setState(() {
+          imageFile = pickedFile;
+        });
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {},
-        child: CircleAvatar(
-          radius: 80,
-          backgroundImage: NetworkImage(
-              'https://images.unsplash.com/photo-1628191013085-990d39ec25b8?ixid=MnwxMjA3fD'
-              'F8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
-        ),
+        onTap: () {
+          attachImage();
+        },
+        child: imageFile != null
+            ? CircleAvatar(
+                radius: 100,
+                backgroundColor: kAccent,
+                backgroundImage: FileImage(
+                  File(imageFile.path),
+                ),
+              )
+            : CircleAvatar(
+                radius: 80,
+                backgroundColor: kAccent,
+                backgroundImage: NetworkImage(
+                  widget.gaugeRecordsModel != null
+                      ? widget.gaugeRecordsModel!.imagepath
+                      : "",
+                ),
+              ),
       ),
     );
   }
@@ -187,27 +223,43 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
   Widget continueButton() => ElevatedButton(
         child: Text("Continue"),
         onPressed: () async {
-          //Navigator.popAndPushNamed(context, HomeActivity.id);
-          var data = GaugeRecordsModel(
-            id: 0,
-            uploaderId: int.parse(uploaderIdController.text),
-            gpsLocation: gpsLocationController.text,
-            waterlevel: waterLevelController.text.toString(),
-            temperature: temperatureController.text.toString(),
-            riverFlow: riverFlowController.text.toString(),
-            gaugeId: int.parse(guageIdController.text),
-            approval: false,
-            approverId: 0,
-            timestamp: null,
-            uploaderModel: null,
-            approverModel: null,
-            gaugeStationModel: null,
-          );
-          var response = await _gaugeRecordsProvider.GaugeRecordsHandler(
-            modelData: data,
-          );
-          loggerAccent(message: response.toJson().toString());
-          Navigator.of(context).pop();
+          if (imageFile != null) {
+            //Navigator.popAndPushNamed(context, HomeActivity.id);
+            var data = GaugeRecordsModel(
+              id: 0,
+              uploaderId: (await _sharedPreferenceProvider.getIntValue(
+                getEnumValue(UserDetails.userId),
+              )),
+              gpsLocation: gpsLocationController.text,
+              waterlevel: waterLevelController.text.toString(),
+              temperature: temperatureController.text.toString(),
+              riverFlow: riverFlowController.text.toString(),
+              gaugeId: int.parse(guageIdController.text),
+              approval: false,
+              approverId: 0,
+              timestamp: null,
+              uploaderModel: null,
+              approverModel: null,
+              gaugeStationModel: null,
+            );
+            var response = await _gaugeRecordsProvider.gaugeRecordsUpload(
+              modelData: data,
+              file: imageFile,
+            );
+            loggerAccent(message: response.toJson().toString());
+            Navigator.of(context).pop();
+            endScreen();
+          } else {
+            Navigator.of(context).pop();
+            final snackBar = SnackBar(content: Text('Please select image'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
       );
+
+  void endScreen() {
+    final snackBar = SnackBar(content: Text('Record Uploaded'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Navigator.of(context).pop();
+  }
 }

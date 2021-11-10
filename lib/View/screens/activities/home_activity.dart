@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/screens/activities/login_activity.dart';
 import 'package:flutter_project/View/screens/fragments/NewsFragment.dart';
 import 'package:flutter_project/View/screens/fragments/historicalData.dart';
 import 'package:flutter_project/View/screens/fragments/home_fragment.dart';
@@ -27,6 +29,8 @@ class _HomeActivityState extends State<HomeActivity> {
 
   int _selectedIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
+  SharedPreferenceProvider _sharedPreferenceProvider =
+      SharedPreferenceProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +43,13 @@ class _HomeActivityState extends State<HomeActivity> {
               floating: true,
               snap: true,
               actions: [
-                IconButton(
-                  onPressed: logOut(),
-                  icon: Icon(Icons.logout),
+                InkWell(
+                  child: IconButton(
+                    onPressed: () {
+                      logOut();
+                    },
+                    icon: Icon(Icons.logout),
+                  ),
                 ),
               ],
             ),
@@ -96,41 +104,8 @@ class _HomeActivityState extends State<HomeActivity> {
     });
   }
 
-  logOut() {
-    // set up the buttons
-    // Widget cancelButton = FlatButton(
-    //   child: Text("Cancel"),
-    //   onPressed: () {
-    //     Navigator.of(context).pop();
-    //   },
-    // );
-    // Widget continueButton = FlatButton(
-    //   child: Text("Sign Out"),
-    //   onPressed: () {
-    //     Navigator.of(context).pop();
-    //   },
-    // );
-    // // set up the AlertDialog
-    // AlertDialog alert = AlertDialog(
-    //   title: Text("SIgn Out"),
-    //   content: Text(
-    //     "Are you sure you want to sign out?",
-    //   ),
-    //   actions: [
-    //     cancelButton,
-    //     continueButton,
-    //   ],
-    // );
-    // show the dialog
-    // try {
-    //   showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return alert;
-    //     },
-    //   );
-    // } catch (e) {
-    //   loggerError(message: e.toString());
-    // }
+  logOut() async {
+    await _sharedPreferenceProvider.logOut();
+    Navigator.popAndPushNamed(context, LoginActivity.id);
   }
 }

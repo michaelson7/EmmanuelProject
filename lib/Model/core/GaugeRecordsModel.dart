@@ -2,6 +2,7 @@ import 'package:flutter_project/View/constants/constants.dart';
 
 import 'GaugeStationModel.dart';
 import 'UsersModel.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class GaugeRecordsModel {
   GaugeRecordsModel({
@@ -32,7 +33,7 @@ class GaugeRecordsModel {
   int gaugeId;
   bool approval;
   int approverId;
-  DateTime? timestamp;
+  dynamic timestamp;
   UsersModel? uploaderModel;
   UsersModel? approverModel;
   GaugeStationModel? gaugeStationModel;
@@ -50,7 +51,7 @@ class GaugeRecordsModel {
         gaugeId: json["gaugeId"],
         approval: json["approval"],
         approverId: json["approverId"],
-        timestamp: DateTime.parse(json["timestamp"]),
+        timestamp: timeago.format(DateTime.parse(json["timestamp"])),
         uploaderModel: UsersModel.fromJson(json["uploaderModel"]),
         approverModel: UsersModel.fromJson(json["approverModel"]),
         gaugeStationModel:

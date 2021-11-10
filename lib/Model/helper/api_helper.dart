@@ -1,6 +1,6 @@
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
-import 'package:flutter_project/Model/core/HostoricalDataModel.dart';
+import 'package:flutter_project/Model/core/HostoricalDataModel.dart' as hdm;
 import 'package:flutter_project/Model/core/NewsModel.dart';
 import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/StaffModel.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_project/Model/core/UsersModel.dart';
 import 'package:flutter_project/Model/core/response_model.dart';
 import 'package:flutter_project/Model/service/api.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ApiHelper {
   Api api = new Api();
@@ -163,6 +164,24 @@ class ApiHelper {
     } catch (e) {
       throw Exception(getError(e, 'gaugeRecordsHandler'));
     }
+  }
+
+  Future<dynamic> gaugeRecordsUpload({
+    required GaugeRecordsModel modelData,
+    bool shouldUpdate = false,
+    required XFile file,
+  }) async {
+    var response = await api.gaugeRecordsUpload(
+      model: modelData,
+      shouldUpdate: shouldUpdate,
+      file: file,
+    );
+    ResponseModel model = ResponseModel.fromJson(response);
+    displayJsonInLogger(
+      shouldDisplayInLogger: true,
+      jsonFile: model.toJson().toString(),
+    );
+    return model;
   }
 
   //gaugeStation
@@ -466,18 +485,18 @@ class ApiHelper {
     }
   }
 
-  Future<List<HistoricalDataModel>?> stationsGetHistoricalData({
+  Future<List<hdm.HistoricalDataModel>?> stationsGetHistoricalData({
     required int stationId,
   }) async {
     try {
-      List<HistoricalDataModel> model = [];
+      List<hdm.HistoricalDataModel> model = [];
       var jsonResponse = await api.stationsGetHistoricalData(
         stationId: stationId,
       );
       if (!jsonResponse["error"]) {
         List<dynamic> results = jsonResponse["results"];
         for (int i = 0; i < results.length; i++) {
-          var modelData = HistoricalDataModel.fromJson(
+          var modelData = hdm.HistoricalDataModel.fromJson(
             jsonResponse["results"][i],
           );
           model.add(modelData);
@@ -670,6 +689,49 @@ class ApiHelper {
       return model;
     } catch (e) {
       throw Exception(getError(e, 'UsersHandler'));
+    }
+  }
+
+  Future<UsersModel?> usersLogin({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UsersModel model;
+      var jsonResponse = await api.usersLogin(
+        email: email,
+        password: password,
+      );
+      if (!jsonResponse["error"]) {
+        model = UsersModel.fromJson(jsonResponse["results"]);
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toJson().toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'usersLogin'));
+    }
+  }
+
+  Future<ResponseModel?> usersRegistration({
+    required UsersModel usersModel,
+    bool showResponse = false,
+  }) async {
+    try {
+      var jsonResponse = await api.usersRegistration(
+        model: usersModel,
+        showResponse: showResponse,
+      );
+      ResponseModel model = ResponseModel.fromJson(jsonResponse);
+      displayJsonInLogger(
+        shouldDisplayInLogger: showResponse,
+        jsonFile: model.toJson().toString(),
+      );
+      return model;
+    } catch (e) {
+      throw Exception(getError(e, 'usersRegistration'));
     }
   }
 

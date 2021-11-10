@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Model/core/HostoricalDataModel.dart';
 import 'package:flutter_project/Model/core/StationsModel.dart';
 import 'package:flutter_project/Provider/StationsProvider.dart';
 import 'package:flutter_project/View/widgets/stationCard.dart';

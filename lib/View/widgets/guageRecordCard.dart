@@ -37,8 +37,8 @@ guageRecordCard(
                   children: [
                     Expanded(
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 80,
+                        height: 80,
                         child: ClipRRect(
                           borderRadius: kBorderRadiusCircular,
                           child: CachedNetworkImage(
@@ -67,7 +67,7 @@ guageRecordCard(
                             value: 'Michael Sama',
                           ),
                           listTileCard(
-                            heading: 'Date Uploaded',
+                            heading: 'Date',
                             value: modelData.timestamp.toString(),
                           ),
                           listTileCard(

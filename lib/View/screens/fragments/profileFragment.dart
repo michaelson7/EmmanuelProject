@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/constants/enums.dart';
 import 'package:flutter_project/View/widgets/inputCard.dart';
 
 class ProfileFragment extends StatefulWidget {
@@ -10,12 +12,22 @@ class ProfileFragment extends StatefulWidget {
 }
 
 class _ProfileFragmentState extends State<ProfileFragment> {
+  SharedPreferenceProvider _sharedPreferenceProvider =
+      SharedPreferenceProvider();
   var nameController = TextEditingController(),
       emailController = TextEditingController(),
+      roleController = TextEditingController(),
       passwordController = TextEditingController();
 
-  void initData() {
-    nameController.text = 'mihcael nazier';
+  Future<void> initData() async {
+    nameController.text = (await _sharedPreferenceProvider
+        .getStringValue(getEnumValue(UserDetails.userName)))!;
+    emailController.text = (await _sharedPreferenceProvider
+        .getStringValue(getEnumValue(UserDetails.userEmail)))!;
+    nameController.text = (await _sharedPreferenceProvider
+        .getStringValue(getEnumValue(UserDetails.userName)))!;
+    roleController.text = (await _sharedPreferenceProvider
+        .getStringValue(getEnumValue(UserDetails.userAccount)))!;
   }
 
   @override
@@ -33,7 +45,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           children: [
             imageHandler(),
             personalInformation(),
-            ButtonHandler(),
+            //ButtonHandler(),
           ],
         ),
       ),
@@ -72,9 +84,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
             controller: emailController,
           ),
           inputCard(
-            title: 'Password, leave empty if you do not want to change',
-            controller: passwordController,
-          )
+            title: 'Role',
+            controller: roleController,
+          ),
+          // inputCard(
+          //   title: 'Password, leave empty if you do not want to change',
+          //   controller: passwordController,
+          // )
         ],
       ),
     );

@@ -19,6 +19,7 @@ class GuageRecords extends StatefulWidget {
 
 class _GuageRecordsState extends State<GuageRecords> {
   GaugeStationModel gaugeStationModel;
+  GaugeRecordsModel? gaugeRecordsModel;
   bool isLoading = false;
   GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
 
@@ -50,6 +51,7 @@ class _GuageRecordsState extends State<GuageRecords> {
             context,
             MaterialPageRoute(
               builder: (context) => AddGuageRecord(
+                gaugeRecordsModel: gaugeRecordsModel,
                 gaugeStationMode: widget.gaugeStationMode,
               ),
             ),
