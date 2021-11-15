@@ -31,8 +31,8 @@ class GaugeRecordsModel {
   dynamic temperature;
   dynamic riverFlow;
   int gaugeId;
-  bool approval;
-  int approverId;
+  dynamic approval;
+  dynamic approverId;
   dynamic timestamp;
   UsersModel? uploaderModel;
   UsersModel? approverModel;

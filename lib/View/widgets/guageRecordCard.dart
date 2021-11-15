@@ -4,13 +4,16 @@ import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/screens/activities/AddGuageRecord.dart';
+import 'package:flutter_project/View/widgets/snackBarBuilder.dart';
 
-guageRecordCard(
-    {required BuildContext context,
-    required int guageRecordId,
-    required String guageStationName,
-    required GaugeRecordsModel modelData,
-    required GaugeStationModel gaugeStationMode}) {
+guageRecordCard({
+  required BuildContext context,
+  required int guageRecordId,
+  required String accountType,
+  required String guageStationName,
+  required GaugeRecordsModel modelData,
+  required GaugeStationModel gaugeStationMode,
+}) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4),
     child: Material(
@@ -18,15 +21,23 @@ guageRecordCard(
       borderRadius: kBorderRadiusCircular,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddGuageRecord(
-                gaugeRecordsModel: modelData,
-                gaugeStationMode: gaugeStationMode,
-              ),
-            ),
-          );
+          if (accountType != "Ordinary Users") {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => AddGuageRecord(
+            //       gaugeRecordsModel: modelData,
+            //       gaugeStationMode: gaugeStationMode,
+            //       update: true,
+            //     ),
+            //   ),
+            // );
+          } else {
+            snackBarBuilder(
+              context: context,
+              message: "You do not have access to this page",
+            );
+          }
         },
         child: Container(
           child: Padding(

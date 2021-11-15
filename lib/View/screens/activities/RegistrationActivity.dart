@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_project/Model/core/RolesModel.dart';
 import 'package:flutter_project/Model/core/UsersModel.dart';
 import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/Provider/UsersProvider.dart';
@@ -129,7 +130,10 @@ class _RegistrationActivityState extends State<RegistrationActivity> {
         password: passwordController.text,
         roleId: 3,
         timestamp: null,
-        rolesModel: null,
+        rolesModel: RolesModel(
+          id: 3,
+          title: "Ordinary Users",
+        ),
       );
       var request = await _usersProvider.usersRegistration(
         usersModel: usersModel,

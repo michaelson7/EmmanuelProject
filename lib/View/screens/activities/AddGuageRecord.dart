@@ -12,12 +12,18 @@ import 'package:flutter_project/View/constants/enums.dart';
 import 'package:flutter_project/View/widgets/inputCard.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'package:flutter_project/View/widgets/outlinedTextFormField.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddGuageRecord extends StatefulWidget {
   final GaugeStationModel gaugeStationMode;
   final GaugeRecordsModel? gaugeRecordsModel;
-  AddGuageRecord({required this.gaugeStationMode, this.gaugeRecordsModel});
+  bool update = false;
+  AddGuageRecord({
+    required this.gaugeStationMode,
+    this.gaugeRecordsModel,
+    required this.update,
+  });
 
   @override
   _AddGuageRecordState createState() => _AddGuageRecordState();
@@ -38,9 +44,12 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
   GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
   final _key = GlobalKey<FormState>();
 
-  void initData() {
+  Future<void> initData() async {
+    var location = await _determinePosition();
+    loggerInfo(message: location.toString());
+
     uploaderIdController.text = '1';
-    gpsLocationController.text = '0000-00000-0000-0000';
+    gpsLocationController.text = location.toString();
 
     guageIdController.text = widget.gaugeStationMode.id.toString();
     guageNameController.text = widget.gaugeStationMode.title;
@@ -54,6 +63,31 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
           widget.gaugeRecordsModel!.temperature.toString();
       riverFlowController.text = widget.gaugeRecordsModel!.riverFlow.toString();
     }
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition();
   }
 
   @override
@@ -226,7 +260,9 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
           if (imageFile != null) {
             //Navigator.popAndPushNamed(context, HomeActivity.id);
             var data = GaugeRecordsModel(
-              id: 0,
+              id: widget.gaugeRecordsModel != null
+                  ? widget.gaugeRecordsModel!.id
+                  : 0,
               uploaderId: (await _sharedPreferenceProvider.getIntValue(
                 getEnumValue(UserDetails.userId),
               )),
@@ -235,8 +271,12 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
               temperature: temperatureController.text.toString(),
               riverFlow: riverFlowController.text.toString(),
               gaugeId: int.parse(guageIdController.text),
-              approval: false,
-              approverId: 0,
+              approval: widget.gaugeRecordsModel != null
+                  ? widget.gaugeRecordsModel!.approval
+                  : null,
+              approverId: widget.gaugeRecordsModel != null
+                  ? widget.gaugeRecordsModel!.approverId
+                  : null,
               timestamp: null,
               uploaderModel: null,
               approverModel: null,
@@ -245,6 +285,7 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
             var response = await _gaugeRecordsProvider.gaugeRecordsUpload(
               modelData: data,
               file: imageFile,
+              shouldUpdate: widget.update,
             );
             loggerAccent(message: response.toJson().toString());
             Navigator.of(context).pop();
@@ -258,7 +299,7 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
       );
 
   void endScreen() {
-    final snackBar = SnackBar(content: Text('Record Uploaded'));
+    final snackBar = SnackBar(content: Text('Record Updated!'));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.of(context).pop();
   }

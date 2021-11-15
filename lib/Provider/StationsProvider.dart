@@ -13,6 +13,7 @@ class StationsProvider extends ChangeNotifier {
   final _stationsController = BehaviorSubject<StationsModel>();
   final _stationsListController = BehaviorSubject<List<StationsModel>>();
   final _stationStats = BehaviorSubject<List<StationStatsModel>>();
+  final _stationStatsModel = BehaviorSubject<StationStatsModelElement>();
 
   get stationsController => _stationsController.stream;
   get stationsListController => _stationsListController.stream;
@@ -38,6 +39,14 @@ class StationsProvider extends ChangeNotifier {
     var result = await _apiHelper.stationGetStats(stationId: stationId);
     if (result != null) {
       _stationStats.add(result);
+      return result;
+    }
+  }
+
+  Future<StationStatsModelElement?> stationStatsGet(int stationId) async {
+    var result = await _apiHelper.stationStatsGet(id: stationId);
+    if (result != null) {
+      _stationStatsModel.add(result);
       return result;
     }
   }

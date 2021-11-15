@@ -207,6 +207,24 @@ class ApiHelper {
     }
   }
 
+  Future<StationStatsModelElement?> stationStatsGet({required int id}) async {
+    try {
+      StationStatsModelElement model;
+      var jsonResponse =
+          await api.globalGetRequest(src: 'StationsStatistics', Id: id);
+      if (!jsonResponse["error"]) {
+        model = StationStatsModelElement.fromJson(jsonResponse["results"]);
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toJson().toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'stationStatsGet'));
+    }
+  }
+
   Future<List<StationStatsModel>?> stationGetStats({
     required int stationId,
   }) async {

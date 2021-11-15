@@ -91,7 +91,8 @@ main() {
     // );
 
     //await _stationProvider.getStations(16);
-    await _stationProvider.getAllStations();
+    //await _stationProvider.getAllStations();
+    var data = await _stationProvider.stationStatsGet(16);
     // await _stationProvider.getStationStats(16);
     // await _stationProvider.StationsHandler(modelData: modelData);
     // await _stationProvider.StationsHandler(

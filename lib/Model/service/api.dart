@@ -15,8 +15,8 @@ import 'package:image_picker/image_picker.dart';
 import 'data_access.dart';
 
 class Api {
-  // String baseUrl = "127.0.0.1:8090";
-  String baseUrl = "10.0.2.2:8090";
+  // String baseUrl = "10.0.2.2:8090";
+  String baseUrl = "192.168.5.127:8090";
   String urlPath = "";
 
   //ROLES
@@ -90,12 +90,16 @@ class Api {
     var modelData = model;
     String fileName = file.path.split('/').last;
     final body = FormData.fromMap({
+      "id": modelData.id,
       "uploaderId": modelData.uploaderId,
+      "imagepath": modelData.imagepath,
       "gpsLocation": modelData.gpsLocation,
       "waterlevel": modelData.waterlevel,
       "temperature": modelData.temperature,
       "riverFlow": modelData.riverFlow,
       "gaugeId": modelData.gaugeId,
+      "approval": modelData.approval,
+      "approverId": modelData.approverId,
       "ImageFile": await MultipartFile.fromFile(
         file.path,
         filename: fileName,

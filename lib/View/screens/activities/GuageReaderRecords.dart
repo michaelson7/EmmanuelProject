@@ -4,8 +4,11 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/Model/core/GaugeRecordsModel.dart';
 import 'package:flutter_project/Model/core/GaugeStationModel.dart';
 import 'package:flutter_project/Provider/GaugeRecordsProvider.dart';
+import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/constants/enums.dart';
 import 'package:flutter_project/View/widgets/guageRecordCard.dart';
+import 'package:flutter_project/View/widgets/snackBarBuilder.dart';
 
 import 'AddGuageRecord.dart';
 
@@ -18,7 +21,10 @@ class GuageRecords extends StatefulWidget {
 }
 
 class _GuageRecordsState extends State<GuageRecords> {
+  SharedPreferenceProvider _sharedPreferenceProvider =
+      SharedPreferenceProvider();
   GaugeStationModel gaugeStationModel;
+  var accountType;
   GaugeRecordsModel? gaugeRecordsModel;
   bool isLoading = false;
   GaugeRecordsProvider _gaugeRecordsProvider = GaugeRecordsProvider();
@@ -26,6 +32,9 @@ class _GuageRecordsState extends State<GuageRecords> {
   _GuageRecordsState(this.gaugeStationModel);
 
   getData() async {
+    accountType = await _sharedPreferenceProvider.getStringValue(
+      getEnumValue(UserDetails.userAccount),
+    );
     _gaugeRecordsProvider.getGaugeRecords(gaugeStationModel.id);
     setState(() => isLoading = false);
   }
@@ -47,15 +56,23 @@ class _GuageRecordsState extends State<GuageRecords> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddGuageRecord(
-                gaugeRecordsModel: gaugeRecordsModel,
-                gaugeStationMode: widget.gaugeStationMode,
+          if (accountType != "Ordinary Users") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddGuageRecord(
+                  gaugeRecordsModel: gaugeRecordsModel,
+                  gaugeStationMode: widget.gaugeStationMode,
+                  update: false,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            snackBarBuilder(
+              context: context,
+              message: "You do not have access to this page",
+            );
+          }
         },
         child: const Icon(FontAwesome5Solid.plus),
         backgroundColor: kAccent,
@@ -81,6 +98,7 @@ class _GuageRecordsState extends State<GuageRecords> {
                     var dataValue = data[index];
                     return guageRecordCard(
                       context: context,
+                      accountType: accountType,
                       guageStationName:
                           widget.gaugeStationMode.stationsModel!.title,
                       guageRecordId: 1,
