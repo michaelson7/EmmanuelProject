@@ -74,6 +74,7 @@ class _RoutesInitState extends State<RoutesInit> {
               ),
             ],
             child: MaterialApp(
+              title: 'Hydro App',
               theme: ThemeData(
                 brightness: Brightness.dark,
                 primaryColor: kAccent,
