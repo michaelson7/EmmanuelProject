@@ -23,6 +23,14 @@ class GaugeStationProvider extends ChangeNotifier {
     }
   }
 
+  Future<GaugeStationModel?> gaugeStationGetByStationId(int id) async {
+    var result = await _apiHelper.gaugeStationGetByStationId(id: id);
+    if (result != null) {
+      _gaugeStationController.add(result);
+      return result;
+    }
+  }
+
   Future<List<GaugeStationModel>?> getAllGaugeStation() async {
     var result = await _apiHelper.gaugeStationGetAll();
     if (result != null) {

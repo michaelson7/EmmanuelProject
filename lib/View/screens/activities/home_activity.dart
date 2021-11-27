@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
+import 'package:flutter_project/View/constants/enums.dart';
 import 'package:flutter_project/View/screens/activities/login_activity.dart';
 import 'package:flutter_project/View/screens/fragments/NewsFragment.dart';
 import 'package:flutter_project/View/screens/fragments/historicalData.dart';
 import 'package:flutter_project/View/screens/fragments/home_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/map_fragment.dart';
 import 'package:flutter_project/View/screens/fragments/profileFragment.dart';
+import 'package:flutter_project/View/screens/fragments/staffLanding.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 
 class HomeActivity extends StatefulWidget {
@@ -19,6 +21,23 @@ class HomeActivity extends StatefulWidget {
 }
 
 class _HomeActivityState extends State<HomeActivity> {
+  bool isStaff = false;
+
+  getData() async {
+    var stationID = await _sharedPreferenceProvider.getStringValue(
+      getEnumValue(UserStation.stationID),
+    );
+    if (stationID != null) {
+      Navigator.pushNamed(context, StaffLanding.id);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   List<Widget> fragments = [
     HomeFragment(),
     MapFragment(),

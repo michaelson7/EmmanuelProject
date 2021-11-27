@@ -207,6 +207,24 @@ class ApiHelper {
     }
   }
 
+  Future<GaugeStationModel?> gaugeStationGetByStationId(
+      {required int id}) async {
+    try {
+      GaugeStationModel model;
+      var jsonResponse = await api.gaugeStationGetByStationId(Id: id);
+      if (!jsonResponse["error"]) {
+        model = GaugeStationModel.fromJson(jsonResponse["results"]);
+        displayJsonInLogger(
+          shouldDisplayInLogger: false,
+          jsonFile: model.toJson().toString(),
+        );
+        return model;
+      }
+    } catch (e) {
+      throw Exception(getError(e, 'gaugeStationGetByStationId'));
+    }
+  }
+
   Future<StationStatsModelElement?> stationStatsGet({required int id}) async {
     try {
       StationStatsModelElement model;

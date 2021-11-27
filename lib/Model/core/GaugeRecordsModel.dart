@@ -20,6 +20,7 @@ class GaugeRecordsModel {
     required this.uploaderModel,
     required this.approverModel,
     required this.gaugeStationModel,
+    this.normalTime,
     this.imageFile,
   });
 
@@ -34,6 +35,7 @@ class GaugeRecordsModel {
   dynamic approval;
   dynamic approverId;
   dynamic timestamp;
+  dynamic normalTime;
   UsersModel? uploaderModel;
   UsersModel? approverModel;
   GaugeStationModel? gaugeStationModel;
@@ -52,6 +54,7 @@ class GaugeRecordsModel {
         approval: json["approval"],
         approverId: json["approverId"],
         timestamp: timeago.format(DateTime.parse(json["timestamp"])),
+        normalTime: DateTime.parse(json["timestamp"]),
         uploaderModel: UsersModel.fromJson(json["uploaderModel"]),
         approverModel: UsersModel.fromJson(json["approverModel"]),
         gaugeStationModel:

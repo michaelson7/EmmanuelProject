@@ -13,6 +13,7 @@ import 'package:flutter_project/View/screens/activities/RegistrationActivity.dar
 import 'package:flutter_project/View/screens/activities/home_activity.dart';
 import 'package:flutter_project/View/screens/activities/login_activity.dart';
 import 'package:flutter_project/View/screens/activities/stationRecords.dart';
+import 'package:flutter_project/View/screens/fragments/staffLanding.dart';
 import 'package:flutter_project/View/widgets/logger_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -113,6 +114,7 @@ class _RoutesInitState extends State<RoutesInit> {
                 HomeActivity.id: (context) => HomeActivity(),
                 LoginActivity.id: (context) => LoginActivity(),
                 RegistrationActivity.id: (context) => RegistrationActivity(),
+                StaffLanding.id: (context) => StaffLanding(),
               },
             ),
           );

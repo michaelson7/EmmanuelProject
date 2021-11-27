@@ -25,6 +25,12 @@ class SharedPreferenceProvider {
     }
   }
 
+  addStattion({required String data}) async {
+    var station = getEnumValue(UserStation.stationID);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(station, data);
+  }
+
   Future<bool> isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool userVal = prefs.containsKey("userId");

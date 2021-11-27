@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Provider/GuageStationProvider.dart';
 import 'package:flutter_project/Provider/SharedPreferenceProvider.dart';
+import 'package:flutter_project/Provider/StaffProvider.dart';
 import 'package:flutter_project/Provider/UsersProvider.dart';
 import 'package:flutter_project/View/constants/constants.dart';
 import 'package:flutter_project/View/widgets/outlinedTextFormField.dart';
@@ -24,6 +26,8 @@ class _LoginActivityState extends State<LoginActivity> {
   var emailController = TextEditingController(),
       passwordController = TextEditingController();
   UsersProvider _usersProvider = UsersProvider();
+  GaugeStationProvider _gaugeStationProvider = GaugeStationProvider();
+  StaffProvider _staffProvider = StaffProvider();
   SharedPreferenceProvider _sharedPreferenceProvider =
       SharedPreferenceProvider();
 
@@ -135,6 +139,18 @@ class _LoginActivityState extends State<LoginActivity> {
       if (request != null) {
         snackBarBuilder(context: context, message: "Login Successful");
         await _sharedPreferenceProvider.addUserDetails(request);
+        var staffData = await _staffProvider.getStaff(request.id);
+
+        if (staffData != null) {
+          int stationID = staffData.stationId;
+          var gaugeRecordId =
+              await _gaugeStationProvider.gaugeStationGetByStationId(stationID);
+          if (gaugeRecordId != null) {
+            await _sharedPreferenceProvider.addStattion(
+              data: gaugeRecordId.id.toString(),
+            );
+          }
+        }
         Navigator.popAndPushNamed(context, HomeActivity.id);
       } else {
         snackBarBuilder(context: context, message: "Account does not exist");

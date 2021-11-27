@@ -15,8 +15,8 @@ import 'package:image_picker/image_picker.dart';
 import 'data_access.dart';
 
 class Api {
-  // String baseUrl = "10.0.2.2:8090";
-  String baseUrl = "192.168.5.127:8090";
+  String baseUrl = "10.0.2.2:8090";
+  // String baseUrl = "192.168.5.127:8090";
   String urlPath = "";
 
   //ROLES
@@ -227,6 +227,19 @@ class Api {
       Uri: uri.toString(),
     );
     return await postResponse(uri, body);
+  }
+
+  Future<dynamic> gaugeStationGetByStationId({
+    required int Id,
+  }) async {
+    urlPath = '/GaugeStationGetByStationId';
+    final requestParameters = {"id": Id.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: false,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
   }
 
   // StationStatistics
