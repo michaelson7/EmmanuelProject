@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,17 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  calculateRiverFlow(double H1) {
+    var constant = 198.426;
+    var HO = 3.623;
+    var gradient = 1.787;
+
+    var firstResult = H1 - HO;
+    var sencondResult = pow(firstResult, gradient);
+    var finalResult = constant * sencondResult;
+    riverFlowController.text = finalResult.toStringAsFixed(2);
   }
 
   @override
@@ -229,6 +241,9 @@ class _AddGuageRecordState extends State<AddGuageRecord> {
             inputCard(
               title: 'Water Level',
               controller: waterLevelController,
+              onChange: (value) {
+                calculateRiverFlow(double.parse(value));
+              },
             ),
             inputCard(
               title: 'Temperature',

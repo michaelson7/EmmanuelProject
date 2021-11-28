@@ -58,7 +58,7 @@ class _HomeActivityState extends State<HomeActivity> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Hydro App'),
+              title: Text('HydroApp'),
               floating: true,
               snap: true,
               actions: [

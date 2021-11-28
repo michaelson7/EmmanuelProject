@@ -8,6 +8,7 @@ Container outlinedTextFormField({
   bool showAccent = false,
   required Function(String) returnedParameter,
   required TextEditingController controller,
+  Function(String)? onChange,
 }) {
   return Container(
     decoration: BoxDecoration(
@@ -22,6 +23,7 @@ Container outlinedTextFormField({
       child: TextFormField(
           obscureText: obscureText,
           controller: controller,
+          onChanged: onChange,
           decoration: InputDecoration(
             border: InputBorder.none,
             labelText: title,
